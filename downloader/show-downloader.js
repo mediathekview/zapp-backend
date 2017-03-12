@@ -1,18 +1,24 @@
-const channels = require('./../models/channels');
+const downloaders = [
+	require('./zdf-downloader')
+];
+const channelIds = downloaders.reduce((ids, downloader) =>
+	ids.concat(downloader.channelIds), []
+);
 
 exports.getShows = function() {
-	return channels.ids.map(function (channelId) {
-		return exports.getShow(channelId);
-	});
+	return Promise.all(channelIds.map(channelId => {
+		return exports.getShow(channelId).catch(e => {
+			console.error(e.message);
+			return null;
+		});
+	}));
 };
 
 exports.getShow = function(channelId) {
-	return  {
-		title: "The Title",
-		subtitle: "The Subtitle",
-		description: "description",
-		channel: channelId,
-		startTime: new Date().getTime(),
-		endTime: new Date().getTime()
-	};
+	for (let downloader of downloaders) {
+		if (downloader.channelIds.includes(channelId)) {
+			return downloader.getShow(channelId);
+		}
+	}
+	return Promise.reject('no downloader available');
 };

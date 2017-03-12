@@ -6,5 +6,5 @@ const app = express();
 app.get('/shows', shows.findAll);
 app.get('/shows/:channelId', shows.findByChannel);
 
-app.listen(3000);
+app.listen(4000);
 console.log('Listening on port 3000...');
