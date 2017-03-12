@@ -1,7 +1,7 @@
 const request = require('request');
 const moment = require('moment-timezone');
 
-const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?to=2017-03-11T12%3A58%3A42Z&limit=1&page=1&order=desc';
+const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
 const headers = {
 	"Host": "api.zdf.de",
 	"Accept": "application/vnd.de.zdf.v1.0+json",
@@ -34,7 +34,9 @@ function getShow(json, channelId) {
 
 exports.getShow = function (channelId) {
 	let urlChannel = channelIdMap[channelId];
-	let url = `${baseUrl}&tvServices=${urlChannel}`;
+	let time = moment.utc().format();
+	let url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
+
 	return new Promise((resolve, reject) => {
 		request.get({
 				url: url,
