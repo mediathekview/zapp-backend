@@ -1,6 +1,9 @@
+const cache = require('./cache');
+
 const downloaders = [
 	require('./zdf-downloader')
 ];
+
 const channelIds = downloaders.reduce((ids, downloader) =>
 	ids.concat(downloader.channelIds), []
 );
@@ -15,9 +18,16 @@ exports.getShows = function() {
 };
 
 exports.getShow = function(channelId) {
+	let show = cache.getShow(channelId);
+	if (show !== null) {
+		return Promise.resolve(show);
+	}
+
 	for (let downloader of downloaders) {
 		if (downloader.channelIds.includes(channelId)) {
-			return downloader.getShow(channelId);
+			let show = downloader.getShow(channelId);
+			show.then(cache.save);
+			return show;
 		}
 	}
 	return Promise.reject('no downloader available');
