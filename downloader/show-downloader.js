@@ -1,7 +1,8 @@
 const cache = require('./cache');
 
 const downloaders = [
-	require('./zdf-downloader')
+	require('./zdf-downloader'),
+	require('./dw-downloader')
 ];
 
 const channelIds = downloaders.reduce((ids, downloader) =>
