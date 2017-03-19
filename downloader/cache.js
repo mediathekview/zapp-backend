@@ -2,6 +2,7 @@ const showMap = {};
 
 exports.save = function (show) {
 	showMap[show.channel] = show;
+	return show;
 };
 
 exports.getShow = function (channelId) {
@@ -14,7 +15,7 @@ exports.getShow = function (channelId) {
 
 	if (show.endTime.isBefore()) {
 		console.log('cache miss: ' + channelId + ', show too old');
-		shows[channelId] = null;
+		showMap[channelId] = null;
 		return null;
 	}
 
