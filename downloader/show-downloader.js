@@ -19,17 +19,19 @@ exports.getShows = function() {
 };
 
 exports.getShow = function(channelId) {
+	// look up in cache
 	let show = cache.getShow(channelId);
 	if (show !== null) {
 		return Promise.resolve(show);
 	}
 
+	// download
 	for (let downloader of downloaders) {
 		if (downloader.channelIds.includes(channelId)) {
-			let show = downloader.getShow(channelId);
-			show.then(cache.save);
-			return show;
+			return downloader.getShow(channelId).then(cache.save);
 		}
 	}
+
+	// neither cache nor download available
 	return Promise.reject('no downloader available');
 };
