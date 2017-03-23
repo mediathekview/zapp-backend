@@ -3,7 +3,6 @@ const shows = require('./routes/shows');
 
 const app = express();
 
-app.get('/v1/shows', shows.findAll);
 app.get('/v1/shows/:channelId', shows.findByChannel);
 
 app.listen(process.env.PORT);
