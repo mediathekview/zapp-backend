@@ -23,6 +23,10 @@ exports.channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo"
 function getShow(json, channelId) {
 	let broadcast = json['http://zdf.de/rels/cmdm/broadcasts'][0];
 
+	if (!broadcast) {
+		return null;
+	}
+
 	return {
 		title: broadcast.title,
 		subtitle: broadcast.subtitle,
@@ -48,7 +52,12 @@ exports.getShow = function (channelId) {
 				} else if (res.statusCode !== 200) {
 					return reject('wrong status code: ' + res.statusCode);
 				} else {
-					return resolve(getShow(data, channelId));
+					let show = getShow(data, channelId);
+					if (show === null) {
+						reject('show info currently not available');
+					} else {
+						return resolve(show);
+					}
 				}
 		});
 	});
