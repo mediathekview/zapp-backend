@@ -3,7 +3,8 @@ const cache = require('./cache');
 const downloaders = [
 	require('./ard-downloader'),
 	require('./zdf-downloader'),
-	require('./dw-downloader')
+	require('./dw-downloader'),
+	require('./parliament-downloader'),
 ];
 
 exports.getShow = function(channelId) {
