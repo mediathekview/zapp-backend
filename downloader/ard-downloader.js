@@ -50,8 +50,8 @@ function parseShows(show, showObj) {
 	let infoLine = show.SPAN[1]._.trim();
 	let channels = infoLine.split('|').map((s) => s.trim());
 	let times = channels.pop().split(/ - | /).map((s) => s.trim());
-	let startTime = moment(times[0], 'HH:mm');
-	let endTime = moment(times[1], 'HH:mm');
+	let startTime = moment.tz(times[0], 'HH:mm', 'Europe/Berlin');
+	let endTime = moment.tz(times[1], 'HH:mm', 'Europe/Berlin');
 
 	if (startTime.isAfter(endTime)) {
 		// show runs at midnight
