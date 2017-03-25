@@ -1,13 +1,10 @@
 const cache = require('./cache');
 
 const downloaders = [
+	require('./ard-downloader'),
 	require('./zdf-downloader'),
 	require('./dw-downloader')
 ];
-
-const channelIds = downloaders.reduce((ids, downloader) =>
-	ids.concat(downloader.channelIds), []
-);
 
 exports.getShow = function(channelId) {
 	// look up in cache

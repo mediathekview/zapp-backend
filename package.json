@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "moment-timezone": "^0.5.11",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
   }
 }
