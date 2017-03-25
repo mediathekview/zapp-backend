@@ -1,6 +1,7 @@
 const request = require('request');
 const moment = require('moment-timezone');
 const xml2js = require('xml2js');
+const Show = require('../models/Show');
 
 const urls = {
 	parlamentsfernsehen_1: 'https://www.bundestag.de/includes/datasources/tv.xml',
@@ -9,23 +10,18 @@ const urls = {
 
 exports.channelIds = ['parlamentsfernsehen_1', 'parlamentsfernsehen_2'];
 
-function parseShow(show, channelId) {
-	let startTime = moment(show.anfangUnix * 1000);
-	let endTime = moment(show.endeUnix * 1000);
-	let subtitle = show.live[0];
-	if (!subtitle) {
-		subtitle = 'Aufzeichnung vom ' + show.aufzeichnungsdatum[0];
-	}
-	return {
-		title: show.langtitel[0],
-		subtitle: subtitle,
-		channel: channelId,
-		startTime: startTime,
-		endTime: endTime
-	};
+function parseShow(showData, channelId) {
+	let show = new Show(showData.langtitel[0]);
+	show.channel = channelId;
+	show.startTime = moment(showData.anfangUnix * 1000);
+	show.endTime = moment(showData.endeUnix * 1000);
+	show.subtitle = showData.live[0] || 'Aufzeichnung vom ' + showData.aufzeichnungsdatum[0];
+	return show;
 }
 
 function getShow(xml, channelId) {
+	let intermission = Show.INTERMISSION;
+
 	return parse(xml).then(data => {
 
 		let lastShow = null;
@@ -36,16 +32,14 @@ function getShow(xml, channelId) {
 					return parsedShow;
 				}
 			} else if (lastShow) {
-				return {
-					title: 'Sendepause',
-					startTime: lastShow.endTime,
-					endTime: parsedShow.startTime
-				};
+				intermission.startTime = lastShow.endTime;
+				intermission.endTime = parsedShow.startTime;
+				return intermission;
 			}
 			lastShow = parsedShow;
 		}
 
-		return { title: 'Sendepause' };
+		return intermission;
 	});
 }
 

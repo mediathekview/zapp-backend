@@ -1,5 +1,6 @@
 const request = require('request');
 const moment = require('moment-timezone');
+const Show = require('../models/Show');
 
 const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
 const headers = {
@@ -27,13 +28,12 @@ function getShow(json, channelId) {
 		return null;
 	}
 
-	return {
-		title: broadcast.title,
-		subtitle: broadcast.subtitle,
-		channel: channelId,
-		startTime: moment(broadcast.airtimeBegin),
-		endTime: moment(broadcast.airtimeEnd)
-	};
+	let show = new Show(broadcast.title);
+	show.subtitle = broadcast.subtitle;
+	show.channel = channelId;
+	show.startTime = moment(broadcast.airtimeBegin);
+	show.endTime = moment(broadcast.airtimeEnd);
+	return show;
 }
 
 exports.getShow = function (channelId) {

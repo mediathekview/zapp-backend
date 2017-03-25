@@ -1,6 +1,7 @@
 const request = require('request');
 const moment = require('moment-timezone');
 const xml2js = require('xml2js');
+const Show = require('../models/Show');
 
 const url = 'http://programm.ard.de/TV/Programm/Load/NavJetztImTV35';
 const parser = new xml2js.Parser({ strict: false });
@@ -46,35 +47,22 @@ exports.channelIds = [
 
 let runningPromise = null;
 
-function parseShows(show, showObj) {
-	let infoLine = show.SPAN[1]._.trim();
+function parseShows(showData, showObj) {
+	let infoLine = showData.SPAN[1]._.trim();
 	let channels = infoLine.split('|').map((s) => s.trim());
 	let times = channels.pop().split(/ - | /).map((s) => s.trim());
-	let startTime = moment.tz(times[0], 'HH:mm', 'Europe/Berlin');
-	let endTime = moment.tz(times[1], 'HH:mm', 'Europe/Berlin');
 
-	if (startTime.isAfter(endTime)) {
-		// show runs at midnight
-		if (moment().hour() < 12) {
-			// now is morning - startTime was yesterday
-			startTime.subtract(1, 'd');
-		} else {
-			// now is evening - end time is tomorrow
-			endTime.add(1, 'd');
-		}
-	}
+	let show = new Show(showData.B[0]);
+	show.startTime = moment.tz(times[0], 'HH:mm', 'Europe/Berlin');
+	show.endTime = moment.tz(times[1], 'HH:mm', 'Europe/Berlin');
+	show.fixMidnightTime();
 
-	let isValidShowTime = startTime.isBefore() && endTime.isAfter();
 	for (let channel of channels) {
 		let channelIds = channelIdMap[channel] || [];
 		for (let channelId of channelIds) {
-			if (isValidShowTime) {
-				showObj[channelId] = {
-					title: show.B[0],
-					channel: channelId,
-					startTime: startTime,
-					endTime: endTime
-				};
+			if (show.isRunningNow()) {
+				show.channel = channelId;
+				showObj[channelId] = show.clone();
 			} else {
 				showObj[channelId] = null;
 			}

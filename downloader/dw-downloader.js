@@ -1,31 +1,41 @@
 const request = require('request');
 const moment = require('moment-timezone');
+const Show = require('../models/Show');
 
 const url = 'http://www.dw.com/api/epg/5?languageId=1';
 
 exports.channelIds = ['deutsche_welle'];
 
 function parseShow(showJson, channelId) {
-	return {
-		title: showJson.name,
-		subtitle: showJson.description,
-		channel: channelId,
-		startTime: moment(showJson.startDate),
-		endTime: moment(showJson.endDate)
-	};
+	let show = new Show(showJson.name);
+	show.channel = channelId;
+	show.subtitle = showJson.description;
+	show.startTime = moment(showJson.startDate);
+	show.endTime = moment(showJson.endDate);
+	return show;
 }
 
 function getShow(json, channelId) {
-	let shows = json.items;
+	let intermission = Show.INTERMISSION;
+	let lastShow = null;
 
 	for (let item of json.items) {
 		let show = parseShow(item, channelId);
-		if (show.startTime.isBefore() && show.endTime.isAfter()) {
-			return Promise.resolve(show);
+
+		if (show.startTime.isBefore()) {
+			if (show.endTime.isAfter()) {
+				return Promise.resolve(show);
+			}
+		} else if (lastShow) {
+			intermission.startTime = lastShow.endTime;
+			intermission.endTime = show.startTime;
+			return Promise.resolve(intermission);
 		}
+
+		lastShow = show;
 	}
 
-	return Promise.reject('intermission');
+	return Promise.resolve(Show.INTERMISSION);
 }
 
 exports.getShow = function (channelId) {
