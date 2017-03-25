@@ -27,12 +27,24 @@ function parseShow(show, channelId) {
 
 function getShow(xml, channelId) {
 	return parse(xml).then(data => {
+
+		let lastShow = null;
 		for (let show of data.tvprogramm.sendung) {
 			let parsedShow = parseShow(show, channelId);
-			if (parsedShow.startTime.isBefore() && parsedShow.endTime.isAfter()) {
-				return parsedShow;
+			if (parsedShow.startTime.isBefore()) {
+				if (parsedShow.endTime.isAfter()) {
+					return parsedShow;
+				}
+			} else if (lastShow) {
+				return {
+					title: 'Sendepause',
+					startTime: lastShow.endTime,
+					endTime: parsedShow.startTime
+				};
 			}
+			lastShow = parsedShow;
 		}
+
 		return { title: 'Sendepause' };
 	});
 }
