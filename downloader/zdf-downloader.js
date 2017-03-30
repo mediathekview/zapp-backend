@@ -30,6 +30,7 @@ function getShow(json, channelId) {
 
 	let show = new Show(broadcast.title);
 	show.subtitle = broadcast.subtitle;
+	show.description = broadcast.text;
 	show.channel = channelId;
 	show.startTime = moment(broadcast.airtimeBegin);
 	show.endTime = moment(broadcast.airtimeEnd);

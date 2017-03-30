@@ -48,11 +48,12 @@ exports.channelIds = [
 let runningPromise = null;
 
 function parseShows(showData, showObj) {
-	let infoLine = showData.SPAN[1]._.trim();
+	let infoLine = showData.IMG[0].SPAN[1]._.trim();
 	let channels = infoLine.split('|').map((s) => s.trim());
 	let times = channels.pop().split(/ - | /).map((s) => s.trim());
 
-	let show = new Show(showData.B[0]);
+	let show = new Show(showData.IMG[0].B[0]);
+	show.infoUrl = 'http://programm.ard.de' + showData.$.HREF;
 	show.startTime = moment.tz(times[0], 'HH:mm', 'Europe/Berlin');
 	show.endTime = moment.tz(times[1], 'HH:mm', 'Europe/Berlin');
 	show.fixMidnightTime();
@@ -88,7 +89,7 @@ function getAllShows(xml) {
 		.then(data => {
 			let showObj = {};
 			for (let item of data.ROOT.LI) {
-				parseShows(item.A[0].IMG[0], showObj);
+				parseShows(item.A[0], showObj);
 			}
 			return Promise.resolve(showObj);
 		});

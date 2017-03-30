@@ -29,8 +29,10 @@ class Show {
 
 	clone() {
 		let show = new Show(this.title);
+		show.description = this.description;
 		show.channel = this.channel;
 		show.subtitle = this.subtitle;
+		show.infoUrl = this.infoUrl;
 		show.startTime = this.startTime;
 		show.endTime = this.endTime;
 		return show;

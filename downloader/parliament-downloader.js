@@ -12,6 +12,7 @@ exports.channelIds = ['parlamentsfernsehen_1', 'parlamentsfernsehen_2'];
 
 function parseShow(showData, channelId) {
 	let show = new Show(showData.langtitel[0]);
+	show.description = showData.infos[0] || null;
 	show.channel = channelId;
 	show.startTime = moment(showData.anfangUnix * 1000);
 	show.endTime = moment(showData.endeUnix * 1000);

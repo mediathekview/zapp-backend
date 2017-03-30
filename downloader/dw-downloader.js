@@ -8,6 +8,7 @@ exports.channelIds = ['deutsche_welle'];
 
 function parseShow(showJson, channelId) {
 	let show = new Show(showJson.name);
+	show.description = showJson.programDescription;
 	show.channel = channelId;
 	show.subtitle = showJson.description;
 	show.startTime = moment(showJson.startDate);
