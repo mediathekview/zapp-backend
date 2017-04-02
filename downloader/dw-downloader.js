@@ -2,9 +2,12 @@ const request = require('request');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
-const url = 'http://www.dw.com/api/epg/5?languageId=1';
+const urls = {
+	deutsche_welle: 'http://www.dw.com/api/epg/5?languageId=1&days=1',
+	deutsche_welle_plus: 'http://www.dw.com/api/epg/4?languageId=1&days=1'
+};
 
-exports.channelIds = ['deutsche_welle'];
+exports.channelIds = Object.keys(urls);
 
 function parseShow(showJson, channelId) {
 	let show = new Show(showJson.name);
@@ -40,6 +43,7 @@ function getShow(json, channelId) {
 }
 
 exports.getShow = function (channelId) {
+	let url = urls[channelId];
 	return new Promise((resolve, reject) => {
 		request.get({ url: url, json: true }, (err, res, data) => {
 				if (err) {
