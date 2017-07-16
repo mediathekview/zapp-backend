@@ -9,6 +9,9 @@
   },
   "author": "Christine Coenen",
   "license": "MIT",
+  "engines": {
+    "node": ">= 6.11.1"
+  },
   "dependencies": {
     "express": "^4.15.2",
     "moment-timezone": "^0.5.11",
