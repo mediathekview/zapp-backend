@@ -6,7 +6,7 @@ const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=des
 const headers = {
 	"Host": "api.zdf.de",
 	"Accept": "application/vnd.de.zdf.v1.0+json",
-	"Api-Auth": "Bearer d2726b6c8c655e42b68b0db26131b15b22bd1a32",
+	"Api-Auth": "Bearer 69c4eddbe0cf82b2a9277e8106a711db314a3008",
 	"Origin": "https://www.zdf.de"
 };
 const channelIdMap = {
