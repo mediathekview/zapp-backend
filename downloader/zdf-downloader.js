@@ -2,11 +2,12 @@ const request = require('request');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
+const apiTokenRegex = new RegExp("[a-f0-9]{40}");
+const indexUrl = 'https://www.zdf.de/live-tv';
 const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
 const headers = {
 	"Host": "api.zdf.de",
 	"Accept": "application/vnd.de.zdf.v1.0+json",
-	"Api-Auth": "Bearer 69c4eddbe0cf82b2a9277e8106a711db314a3008",
 	"Origin": "https://www.zdf.de"
 };
 const channelIdMap = {
@@ -18,6 +19,8 @@ const channelIdMap = {
 	"zdf_neo": "ZDFneo",
 	"arte": "arte",
 };
+
+let apiToken = false;
 
 exports.channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo", "arte"];
 
@@ -37,20 +40,43 @@ function getShow(json, channelId) {
 	return show;
 }
 
+function getApiToken() {
+	if (apiToken) {
+		return Promise.resolve(apiToken);
+	}
+
+	return new Promise((resolve, reject) => {
+		request.get({ url: indexUrl }, (err, res, data) => {
+			if (err) {
+				reject(err);
+			} else if (res.statusCode !== 200) {
+				return reject('wrong status code: ' + res.statusCode);
+			} else {
+				apiToken = apiTokenRegex.exec(data);
+				if (apiToken) {
+					return resolve(apiToken);
+				} else {
+					return reject('api token not found');
+				}
+			}
+		});
+	});
+}
+
 exports.getShow = function (channelId) {
 	let urlChannel = channelIdMap[channelId];
 	let time = moment.utc().format();
 	let url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
-	return new Promise((resolve, reject) => {
-		request.get({
-				url: url,
-				json: true,
-				headers: headers
-			}, (err, res, data) => {
+	return getApiToken().then(apiToken => {
+		return new Promise((resolve, reject) => {
+			headers["Api-Auth"] = "Bearer " + apiToken;
+
+			request.get({ url: url, json: true, headers: headers }, (err, res, data) => {
 				if (err) {
 					reject(err);
 				} else if (res.statusCode !== 200) {
+					apiToken = false;
 					return reject('wrong status code: ' + res.statusCode);
 				} else {
 					let show = getShow(data, channelId);
@@ -60,6 +86,7 @@ exports.getShow = function (channelId) {
 						return resolve(show);
 					}
 				}
+			});
 		});
 	});
 };
