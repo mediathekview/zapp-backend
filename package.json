@@ -13,8 +13,8 @@
     "node": ">= 10.15.3"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "moment-timezone": "^0.5.25",
+    "express": "^4.17.1",
+    "moment-timezone": "^0.5.26",
     "request": "^2.88.0",
     "xml2js": "^0.4.19"
   }
