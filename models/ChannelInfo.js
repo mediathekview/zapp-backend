@@ -1,7 +1,8 @@
 class ChannelInfo {
 
-	constructor(streamUrl) {
+	constructor(streamUrl, name) {
 		this.streamUrl = streamUrl;
+		this.name = name;
 	}
 
 }
