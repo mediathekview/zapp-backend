@@ -26,6 +26,7 @@ module.exports = {
 	"ndr_sh": new ChannelInfo("https://ndrfs-lh.akamaihd.net/i/ndrfs_sh@430234/master.m3u8"),
 	"rbb_berlin": new ChannelInfo("https://rbblive-lh.akamaihd.net/i/rbb_berlin@144674/master.m3u8"),
 	"rbb_brandenburg": new ChannelInfo("https://rbblive-lh.akamaihd.net/i/rbb_brandenburg@349369/master.m3u8"),
+	"rb": new ChannelInfo("https://rbfs-lh.akamaihd.net/i/rb_fs@438960/master.m3u8"),
 	"sr": new ChannelInfo("http://live2_sr-lh.akamaihd.net/i/sr_universal02@107595/master.m3u8"),
 	"swr_bw": new ChannelInfo("https://swrbwhls-i.akamaihd.net/hls/live/667638/swrbwd/master.m3u8"),
 	"swr_rp": new ChannelInfo("https://swrrphls-i.akamaihd.net/hls/live/667639/swrrpd/master.m3u8"),

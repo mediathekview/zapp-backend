@@ -20,6 +20,7 @@ const channelIdMap = {
 	'SWR Ferns. BW': ['swr_bw'],
 	'SWR Ferns. RP': ['swr_rp'],
 	'rbb Fernsehen': ['rbb_berlin', 'rbb_brandenburg'],
+	'Radio Bremen': ['rb'],
 };
 
 exports.channelIds = [
@@ -43,6 +44,7 @@ exports.channelIds = [
 	'swr_rp',
 	'rbb_berlin',
 	'rbb_brandenburg',
+	'rb',
 ];
 
 let runningPromise = null;
