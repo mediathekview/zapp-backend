@@ -2,7 +2,7 @@ const request = require('request');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
-const apiTokenRegex = new RegExp("[a-f0-9]{40}");
+const apiTokenRegex = new RegExp("apiToken[\\s\:\"\']*([\\w\-\.]{100,})");
 const indexUrl = 'https://www.zdf.de/live-tv';
 const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
 const headers = {
@@ -52,9 +52,9 @@ function getApiToken() {
 			} else if (res.statusCode !== 200) {
 				return reject('wrong status code: ' + res.statusCode);
 			} else {
-				apiToken = apiTokenRegex.exec(data);
-				if (apiToken) {
-					return resolve(apiToken);
+				apiToken = data.match(apiTokenRegex);
+				if (apiToken.length >= 2) {
+					return resolve(apiToken[1]);
 				} else {
 					return reject('api token not found');
 				}
