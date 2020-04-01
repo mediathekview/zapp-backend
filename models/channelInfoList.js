@@ -1,7 +1,7 @@
 const ChannelInfo = require('./ChannelInfo');
 
 module.exports = {
-	"das_erste": new ChannelInfo("https://derste247livede.akamaized.net/hls/live/658317/daserste_de/master.m3u8", "Das Erste"),
+	"das_erste": new ChannelInfo("https://mcdn.daserste.de/daserste/de/master_3744.m3u8", "Das Erste"),
 	"zdf": new ChannelInfo("https://zdf-hls-01.akamaized.net/hls/live/2002460/de/high/master.m3u8", "ZDF"),
 	"arte": new ChannelInfo("https://artelive-lh.akamaihd.net/i/artelive_de@393591/master.m3u8", "ARTE"),
 	"dreisat": new ChannelInfo("https://zdfhls18-i.akamaihd.net/hls/live/744751/dach/high/master.m3u8", "3sat"),
