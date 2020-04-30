@@ -52,9 +52,9 @@ function getApiToken() {
 			} else if (res.statusCode !== 200) {
 				return reject('wrong status code for getApiToken: ' + res.statusCode);
 			} else {
-				apiToken = data.match(apiTokenRegex);
-				if (apiToken.length >= 2) {
-					return resolve(apiToken[1]);
+				let newApiToken = data.match(apiTokenRegex);
+				if (newApiToken.length >= 2) {
+					return resolve(newApiToken[1]);
 				} else {
 					return reject('api token not found');
 				}
@@ -68,8 +68,9 @@ exports.getShow = function (channelId) {
 	let time = moment.utc().format();
 	let url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
-	return getApiToken().then(apiToken => {
+	return getApiToken().then(newApiToken => {
 		return new Promise((resolve, reject) => {
+			apiToken = newApiToken;
 			headers["Api-Auth"] = "Bearer " + apiToken;
 
 			request.get({ url: url, json: true, headers: headers }, (err, res, data) => {
