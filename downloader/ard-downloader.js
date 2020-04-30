@@ -114,7 +114,7 @@ function requestShow() {
 exports.getShow = function (channelId) {
 	function resolveFromShows(shows) {
 		let show = shows[channelId];
-		if (show === null) {
+		if (!show) {
 			throw 'show info currently not available';
 		} else {
 			return show;
