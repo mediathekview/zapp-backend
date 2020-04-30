@@ -50,7 +50,7 @@ function getApiToken() {
 			if (err) {
 				reject(err);
 			} else if (res.statusCode !== 200) {
-				return reject('wrong status code: ' + res.statusCode);
+				return reject('wrong status code for getApiToken: ' + res.statusCode);
 			} else {
 				apiToken = data.match(apiTokenRegex);
 				if (apiToken.length >= 2) {
@@ -77,7 +77,7 @@ exports.getShow = function (channelId) {
 					reject(err);
 				} else if (res.statusCode !== 200) {
 					apiToken = false;
-					return reject('wrong status code: ' + res.statusCode);
+					return reject('wrong status code for getShow: ' + res.statusCode);
 				} else {
 					let show = getShow(data, channelId);
 					if (show === null) {
