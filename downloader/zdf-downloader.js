@@ -2,7 +2,7 @@ const request = require('request');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
-const apiTokenRegex = new RegExp("apiToken[\\s\:\"\']*([\\w\-\.]{100,})");
+const apiTokenRegex = new RegExp("apiToken[\\s\:\"\']*([\\w\-\.]{40,})");
 const indexUrl = 'https://www.zdf.de/live-tv';
 const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
 const headers = {
