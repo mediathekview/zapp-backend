@@ -53,7 +53,7 @@ function getApiToken() {
 				return reject('wrong status code for getApiToken: ' + res.statusCode);
 			} else {
 				let newApiToken = data.match(apiTokenRegex);
-				if (newApiToken.length >= 2) {
+				if (newApiToken && newApiToken.length >= 2) {
 					return resolve(newApiToken[1]);
 				} else {
 					return reject('api token not found');
