@@ -9,7 +9,8 @@ context('Show downloader', function () {
 		function testChannel(channelId) {
 			it(`should not crash when running for ${channelId}`, async function () {
 				try {
-					await showDownloader.getShow(channelId);
+					let show = await showDownloader.getShow(channelId);
+					assert.ok(show.title);
 				}
 				catch(e) {
 					if (e.indexOf('not available') === -1) {

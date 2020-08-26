@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const moment = require('moment-timezone');
 const xml2js = require('xml2js');
 const Show = require('../models/Show');
@@ -20,61 +20,48 @@ function parseShow(showData, channelId) {
 	return show;
 }
 
-function getShow(xml, channelId) {
+async function getShow(xml, channelId) {
 	let intermission = Show.INTERMISSION;
+	const data = await xml2js.parseStringPromise(xml);
 
-	return parse(xml).then(data => {
-		if (data.tvprogramm.length == 0) {
-			return null;
+	if (data.tvprogramm.length == 0) {
+		return null;
+	}
+
+	let lastShow = null;
+
+	for (let show of data.tvprogramm.sendung) {
+		let parsedShow = parseShow(show, channelId);
+
+		if (parsedShow.startTime.isBefore()) {
+			if (parsedShow.endTime.isAfter()) {
+				return parsedShow;
+			}
+		} else if (lastShow) {
+			intermission.startTime = lastShow.endTime;
+			intermission.endTime = parsedShow.startTime;
+			return intermission;
 		}
 
-		let lastShow = null;
-		for (let show of data.tvprogramm.sendung) {
-			let parsedShow = parseShow(show, channelId);
-			if (parsedShow.startTime.isBefore()) {
-				if (parsedShow.endTime.isAfter()) {
-					return parsedShow;
-				}
-			} else if (lastShow) {
-				intermission.startTime = lastShow.endTime;
-				intermission.endTime = parsedShow.startTime;
-				return intermission;
-			}
-			lastShow = parsedShow;
-		}
+		lastShow = parsedShow;
+	}
 
-		return intermission;
-	});
+	return intermission;
 }
 
-function parse(xml) {
-	return new Promise((resolve, reject) => {
-		xml2js.parseString(xml, (err, data) => {
-			if (err) {
-				reject('parsing error ' + err);
-			} else {
-				resolve(data);
-			}
-		});
-	});
-}
+exports.getShow = async function (channelId) {
+	const url = urls[channelId];
+	const response = await axios.get(url);
 
-exports.getShow = function (channelId) {
-	return new Promise((resolve, reject) => {
-		request.get({ url: urls[channelId] }, (err, res, data) => {
-				if (err) {
-					reject(err);
-				} else if (res.statusCode !== 200) {
-					reject('wrong status code: ' + res.statusCode);
-				} else {
-					const show = getShow(data, channelId).then(show => {
-						if (show === null) {
-							reject('show info currently not available');
-						} else {
-							resolve(show);
-						}
-					});
-				}
-		});
-	});
+	if (response.status !== 200) {
+		throw 'wrong status code for getShow: ' + response.status;
+	}
+
+	const show = await getShow(response.data, channelId);
+
+	if (show === null) {
+		throw('show info currently not available');
+	}
+
+	return show;
 };

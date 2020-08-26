@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
@@ -54,21 +54,18 @@ function getShow(json, channelId, mediathekChannelName) {
 	return null;
 }
 
-exports.getShow = function (channelId) {
-	return new Promise((resolve, reject) => {
-		request.get({ url: url, json: true }, (err, res, data) => {
-			if (err) {
-				reject(err);
-			} else if (res.statusCode !== 200) {
-				reject('wrong status code for getShow: ' + res.statusCode);
-			} else {
-				let show = getShow(data, channelId, channelIdMap[channelId]);
-				if (show === null) {
-					reject('show info currently not available');
-				} else {
-					resolve(show);
-				}
-			}
-		});
-	});
+exports.getShow = async function (channelId) {
+	const response = await axios.get(url);
+
+	if (response.status !== 200) {
+		throw 'wrong status code for getShow: ' + response.status;
+	}
+
+	const show = getShow(response.data, channelId, channelIdMap[channelId]);
+
+	if (show === null) {
+		throw('show info currently not available');
+	}
+
+	return show;
 };

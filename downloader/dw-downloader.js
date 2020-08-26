@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
@@ -28,31 +28,33 @@ function getShow(json, channelId) {
 
 		if (show.startTime.isBefore()) {
 			if (show.endTime.isAfter()) {
-				return Promise.resolve(show);
+				return show;
 			}
 		} else if (lastShow) {
 			intermission.startTime = lastShow.endTime;
 			intermission.endTime = show.startTime;
-			return Promise.resolve(intermission);
+			return intermission;
 		}
 
 		lastShow = show;
 	}
 
-	return Promise.resolve(Show.INTERMISSION);
+	return Show.INTERMISSION;
 }
 
-exports.getShow = function (channelId) {
-	let url = urls[channelId];
-	return new Promise((resolve, reject) => {
-		request.get({ url: url, json: true }, (err, res, data) => {
-				if (err) {
-					reject(err);
-				} else if (res.statusCode !== 200) {
-					return reject('wrong status code: ' + res.statusCode);
-				} else {
-					return resolve(getShow(data, channelId));
-				}
-		});
-	});
+exports.getShow = async function (channelId) {
+	const url = urls[channelId];
+	const response = await axios.get(url);
+
+	if (response.status !== 200) {
+		throw 'wrong status code for getShow: ' + response.status;
+	}
+
+	const show = getShow(response.data, channelId);
+
+	if (show === null) {
+		throw('show info currently not available');
+	}
+
+	return show;
 };

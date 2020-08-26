@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const moment = require('moment-timezone');
 const Show = require('../models/Show');
 
@@ -40,54 +40,45 @@ function getShow(json, channelId) {
 	return show;
 }
 
-function getApiToken() {
+async function getApiToken() {
 	if (apiToken) {
-		return Promise.resolve(apiToken);
+		return apiToken;
 	}
 
-	return new Promise((resolve, reject) => {
-		request.get({ url: indexUrl }, (err, res, data) => {
-			if (err) {
-				reject(err);
-			} else if (res.statusCode !== 200) {
-				return reject('wrong status code for getApiToken: ' + res.statusCode);
-			} else {
-				let newApiToken = data.match(apiTokenRegex);
-				if (newApiToken && newApiToken.length >= 2) {
-					return resolve(newApiToken[1]);
-				} else {
-					return reject('api token not found');
-				}
-			}
-		});
-	});
+	const response = await axios.get(indexUrl);
+
+	if (response.status !== 200) {
+		throw 'wrong status code for getShow: ' + response.status;
+	}
+
+	let newApiToken = response.data.match(apiTokenRegex);
+
+	if (newApiToken && newApiToken.length >= 2) {
+		return newApiToken[1];
+	} else {
+		throw 'api token not found';
+	}
 }
 
-exports.getShow = function (channelId) {
-	let urlChannel = channelIdMap[channelId];
-	let time = moment.utc().format();
-	let url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
+exports.getShow = async function (channelId) {
+	const urlChannel = channelIdMap[channelId];
+	const time = moment.utc().format();
+	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
-	return getApiToken().then(newApiToken => {
-		return new Promise((resolve, reject) => {
-			apiToken = newApiToken;
-			headers["Api-Auth"] = "Bearer " + apiToken;
+	const apiToken = await getApiToken();
+	headers["Api-Auth"] = "Bearer " + apiToken;
 
-			request.get({ url: url, json: true, headers: headers }, (err, res, data) => {
-				if (err) {
-					reject(err);
-				} else if (res.statusCode !== 200) {
-					apiToken = false;
-					return reject('wrong status code for getShow: ' + res.statusCode);
-				} else {
-					let show = getShow(data, channelId);
-					if (show === null) {
-						reject('show info currently not available');
-					} else {
-						return resolve(show);
-					}
-				}
-			});
-		});
-	});
+	const response = await axios.get(url, { headers: headers });
+
+	if (response.status !== 200) {
+		throw 'wrong status code for getShow: ' + response.status;
+	}
+
+	const show = getShow(response.data, channelId);
+
+	if (show === null) {
+		throw('show info currently not available');
+	}
+
+	return show;
 };
