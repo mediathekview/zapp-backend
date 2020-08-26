@@ -8,7 +8,8 @@ context('Show downloader', function () {
 
 		function testChannel(channelId) {
 			it(`should not crash when running for ${channelId}`, async function () {
-				await showDownloader.getShow(channelId)
+				const show = await showDownloader.getShow(channelId);
+				console.log(show.title);
 			});
 		}
 

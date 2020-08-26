@@ -24,6 +24,8 @@ const channelIdMap = {
 	"swr_bw": "swr-württemberg",
 	"swr_rp": "swr-württemberg",
 	"ard_alpha": "alpha",
+	"wdr": "wdr",
+	"one": "one",
 };
 
 exports.channelIds = Object.keys(channelIdMap);
@@ -34,10 +36,10 @@ function getShow(json, channelId, mediathekChannelName) {
 	if (!broadcasts) {
 		return null;
 	}
-	
+
 	for (let entryKey in broadcasts) {
 		const entry = broadcasts[entryKey].now;
-		
+
 		if (entry && entry.channel.mediathek_name === mediathekChannelName) {
 			let show = new Show(entry.title);
 			show.subtitle = entry.sub_title;
@@ -46,9 +48,9 @@ function getShow(json, channelId, mediathekChannelName) {
 			show.startTime = moment(entry.start);
 			show.endTime = moment(entry.stop);
 			return show;
-		}			
+		}
 	}
-	
+
 	return null;
 }
 
