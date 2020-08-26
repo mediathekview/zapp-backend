@@ -60,13 +60,13 @@ exports.getShow = function (channelId) {
 			if (err) {
 				reject(err);
 			} else if (res.statusCode !== 200) {
-				return reject('wrong status code for getShow: ' + res.statusCode);
+				reject('wrong status code for getShow: ' + res.statusCode);
 			} else {
 				let show = getShow(data, channelId, channelIdMap[channelId]);
 				if (show === null) {
 					reject('show info currently not available');
 				} else {
-					return resolve(show);
+					resolve(show);
 				}
 			}
 		});

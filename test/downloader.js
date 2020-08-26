@@ -8,8 +8,14 @@ context('Show downloader', function () {
 
 		function testChannel(channelId) {
 			it(`should not crash when running for ${channelId}`, async function () {
-				const show = await showDownloader.getShow(channelId);
-				console.log(show.title);
+				try {
+					await showDownloader.getShow(channelId);
+				}
+				catch(e) {
+					if (e.indexOf('not available') === -1) {
+						assert.fail('Some unexpected error: ' + e);
+					}
+				}
 			});
 		}
 

@@ -24,6 +24,9 @@ function getShow(xml, channelId) {
 	let intermission = Show.INTERMISSION;
 
 	return parse(xml).then(data => {
+		if (data.tvprogramm.length == 0) {
+			return null;
+		}
 
 		let lastShow = null;
 		for (let show of data.tvprogramm.sendung) {
@@ -62,9 +65,15 @@ exports.getShow = function (channelId) {
 				if (err) {
 					reject(err);
 				} else if (res.statusCode !== 200) {
-					return reject('wrong status code: ' + res.statusCode);
+					reject('wrong status code: ' + res.statusCode);
 				} else {
-					return resolve(getShow(data, channelId));
+					const show = getShow(data, channelId).then(show => {
+						if (show === null) {
+							reject('show info currently not available');
+						} else {
+							resolve(show);
+						}
+					});
 				}
 		});
 	});
