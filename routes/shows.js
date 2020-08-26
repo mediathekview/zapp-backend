@@ -1,8 +1,8 @@
-const downloader = require('./../downloader/show-downloader');
+const downloader = require("./../downloader/show-downloader");
 
 function sendErrorResponse(e, res) {
 	let message = e.message;
-	if (typeof(message) === 'undefined') {
+	if (typeof(message) === "undefined") {
 		message = e;
 	}
 

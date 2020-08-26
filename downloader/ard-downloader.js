@@ -1,8 +1,8 @@
-const axios = require('axios');
-const moment = require('moment-timezone');
-const Show = require('../models/Show');
+const axios = require("axios");
+const moment = require("moment-timezone");
+const Show = require("../models/Show");
 
-const url = 'https://programm.ard.de/TV/Export/Now';
+const url = "https://programm.ard.de/TV/Export/Now";
 
 const channelIdMap = {
 	"das_erste": "daserste",
@@ -31,7 +31,7 @@ const channelIdMap = {
 exports.channelIds = Object.keys(channelIdMap);
 
 function getShow(json, channelId, mediathekChannelName) {
-	let broadcasts = json['events'];
+	let broadcasts = json.events;
 
 	if (!broadcasts) {
 		return null;
@@ -58,13 +58,13 @@ exports.getShow = async function (channelId) {
 	const response = await axios.get(url);
 
 	if (response.status !== 200) {
-		throw 'wrong status code for getShow: ' + response.status;
+		throw "wrong status code for getShow: " + response.status;
 	}
 
 	const show = getShow(response.data, channelId, channelIdMap[channelId]);
 
 	if (show === null) {
-		throw('show info currently not available');
+		throw("show info currently not available");
 	}
 
 	return show;

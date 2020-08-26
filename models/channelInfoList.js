@@ -1,4 +1,4 @@
-const ChannelInfo = require('./ChannelInfo');
+const ChannelInfo = require("./ChannelInfo");
 
 module.exports = {
 	"das_erste": new ChannelInfo("https://mcdn.daserste.de/daserste/de/master.m3u8", "Das Erste"),

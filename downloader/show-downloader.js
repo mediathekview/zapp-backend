@@ -1,10 +1,10 @@
-const cache = require('./cache');
+const cache = require("./cache");
 
 const downloaders = [
-	require('./ard-downloader'),
-	require('./zdf-downloader'),
-	require('./dw-downloader'),
-	require('./parliament-downloader'),
+	require("./ard-downloader"),
+	require("./zdf-downloader"),
+	require("./dw-downloader"),
+	require("./parliament-downloader"),
 ];
 
 exports.getShow = async function(channelId) {
@@ -22,5 +22,5 @@ exports.getShow = async function(channelId) {
 	}
 
 	// neither cache nor download available
-	throw 'no downloader available';
+	throw "no downloader available";
 };

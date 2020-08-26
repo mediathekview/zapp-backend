@@ -1,10 +1,10 @@
-const axios = require('axios');
-const moment = require('moment-timezone');
-const Show = require('../models/Show');
+const axios = require("axios");
+const moment = require("moment-timezone");
+const Show = require("../models/Show");
 
-const apiTokenRegex = new RegExp("apiToken[\\s\:\"\']*([\\w\-\.]{40,})");
-const indexUrl = 'https://www.zdf.de/live-tv';
-const baseUrl = 'https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc';
+const apiTokenRegex = new RegExp("apiToken[\\s\:\"\"]*([\\w\-\.]{40,})");
+const indexUrl = "https://www.zdf.de/live-tv";
+const baseUrl = "https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc";
 const headers = {
 	"Host": "api.zdf.de",
 	"Accept": "application/vnd.de.zdf.v1.0+json",
@@ -25,7 +25,7 @@ let apiToken = false;
 exports.channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo", "arte"];
 
 function getShow(json, channelId) {
-	let broadcast = json['http://zdf.de/rels/cmdm/broadcasts'][0];
+	let broadcast = json["http://zdf.de/rels/cmdm/broadcasts"][0];
 
 	if (!broadcast) {
 		return null;
@@ -48,7 +48,7 @@ async function getApiToken() {
 	const response = await axios.get(indexUrl);
 
 	if (response.status !== 200) {
-		throw 'wrong status code for getShow: ' + response.status;
+		throw "wrong status code for getShow: " + response.status;
 	}
 
 	let newApiToken = response.data.match(apiTokenRegex);
@@ -56,7 +56,7 @@ async function getApiToken() {
 	if (newApiToken && newApiToken.length >= 2) {
 		return newApiToken[1];
 	} else {
-		throw 'api token not found';
+		throw "api token not found";
 	}
 }
 
@@ -71,13 +71,13 @@ exports.getShow = async function (channelId) {
 	const response = await axios.get(url, { headers: headers });
 
 	if (response.status !== 200) {
-		throw 'wrong status code for getShow: ' + response.status;
+		throw "wrong status code for getShow: " + response.status;
 	}
 
 	const show = getShow(response.data, channelId);
 
 	if (show === null) {
-		throw('show info currently not available');
+		throw("show info currently not available");
 	}
 
 	return show;

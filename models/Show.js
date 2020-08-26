@@ -1,9 +1,9 @@
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
 
 class Show {
 
 	static get INTERMISSION() {
-		return new Show('Sendepause');
+		return new Show("Sendepause");
 	}
 
 	constructor(title) {
@@ -17,12 +17,12 @@ class Show {
 	fixMidnightTime() {
 		if (this.startTime.isAfter(this.endTime)) {
 			// show runs at midnight
-			if (moment.tz('Europe/Berlin').hour() < 12) {
+			if (moment.tz("Europe/Berlin").hour() < 12) {
 				// now is morning - startTime was yesterday
-				this.startTime.subtract(1, 'd');
+				this.startTime.subtract(1, "d");
 			} else {
 				// now is evening - end time is tomorrow
-				this.endTime.add(1, 'd');
+				this.endTime.add(1, "d");
 			}
 		}
 	}
