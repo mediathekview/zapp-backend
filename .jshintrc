@@ -1,4 +1,18 @@
 {
-  "node": true,
-  "esnext": true
+	"esversion": 8,
+	"node": true,
+	"mocha": true,
+	"bitwise": true,
+	"curly": true,
+	"eqeqeq": true,
+	"newcap": true,
+	"noarg" : true,
+	"noempty": true,
+	"nonbsp": true,
+	"nonew": true,
+	"quotmark": "double",
+	"undef": true,
+	"unused": true,
+	"strict": "implied",
+	"varstmt": true
 }
