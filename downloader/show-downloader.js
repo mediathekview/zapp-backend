@@ -7,11 +7,11 @@ const downloaders = [
 	require('./parliament-downloader'),
 ];
 
-exports.getShow = function(channelId) {
+exports.getShow = async function(channelId) {
 	// look up in cache
 	let show = cache.getShow(channelId);
 	if (show !== null) {
-		return Promise.resolve(show);
+		return show;
 	}
 
 	// download
@@ -22,5 +22,5 @@ exports.getShow = function(channelId) {
 	}
 
 	// neither cache nor download available
-	return Promise.reject('no downloader available');
+	throw 'no downloader available';
 };
