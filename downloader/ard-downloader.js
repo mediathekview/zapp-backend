@@ -71,6 +71,8 @@ exports.getShow = async function (channelId) {
 
 	if (cachedShow !== null) {
 		// already cached this show internally (maybe from a run for another channel)
+		console.log(`- ${channelId} was loaded from ard cache`);
+
 		// set correct channel because in mediathekChannelName can map to multiple ids
 		cachedShow.channel = channelId;
 		return cachedShow;
