@@ -2,10 +2,6 @@ const moment = require("moment-timezone");
 
 class Show {
 
-	static get INTERMISSION() {
-		return new Show("Sendepause");
-	}
-
 	constructor(title) {
 		this.title = title;
 	}

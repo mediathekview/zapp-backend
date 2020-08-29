@@ -21,32 +21,21 @@ function parseShow(showData, channelId) {
 }
 
 async function getShow(xml, channelId) {
-	let intermission = Show.INTERMISSION;
 	const data = await xml2js.parseStringPromise(xml);
 
 	if (data.tvprogramm.length === 0) {
 		return null;
 	}
 
-	let lastShow = null;
-
 	for (let show of data.tvprogramm.sendung) {
 		let parsedShow = parseShow(show, channelId);
 
-		if (parsedShow.startTime.isBefore()) {
-			if (parsedShow.endTime.isAfter()) {
-				return parsedShow;
-			}
-		} else if (lastShow) {
-			intermission.startTime = lastShow.endTime;
-			intermission.endTime = parsedShow.startTime;
-			return intermission;
+		if (parsedShow.isRunningNow()) {
+			return parsedShow;
 		}
-
-		lastShow = parsedShow;
 	}
 
-	return intermission;
+	return null;
 }
 
 exports.getShow = async function (channelId) {

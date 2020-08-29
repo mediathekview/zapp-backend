@@ -12,6 +12,7 @@ context("Show downloader", function () {
 					let show = await showDownloader.getShow(channelId);
 					assert.ok(show.title);
 					assert.equal(show.channel, channelId);
+					assert.ok(show.isRunningNow());
 				}
 				catch(e) {
 					if (typeof(e.indexOf) !== "function" || e.indexOf("not available") === -1) {

@@ -20,26 +20,15 @@ function parseShow(showJson, channelId) {
 }
 
 function getShow(json, channelId) {
-	let intermission = Show.INTERMISSION;
-	let lastShow = null;
-
 	for (let item of json.items) {
 		let show = parseShow(item, channelId);
 
-		if (show.startTime.isBefore()) {
-			if (show.endTime.isAfter()) {
-				return show;
-			}
-		} else if (lastShow) {
-			intermission.startTime = lastShow.endTime;
-			intermission.endTime = show.startTime;
-			return intermission;
+		if (show.isRunningNow()) {
+			return show;
 		}
-
-		lastShow = show;
 	}
 
-	return Show.INTERMISSION;
+	return null;
 }
 
 exports.getShow = async function (channelId) {
