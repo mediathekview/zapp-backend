@@ -1,5 +1,5 @@
 const assert = require("assert");
-const channelInfoList = require("../models/ChannelInfoList.js");
+const channelInfoList = require("../models/channelInfoList.js");
 const showDownloader = require("../downloader/show-downloader");
 
 context("Show downloader", function () {
