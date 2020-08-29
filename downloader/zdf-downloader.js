@@ -66,20 +66,29 @@ exports.getShow = async function (channelId) {
 	const time = moment.utc().format();
 	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
-	const apiToken = await getApiToken();
-	headers["Api-Auth"] = "Bearer " + apiToken;
+	let response = null;
 
-	console.log(`- load ${url} to get show info for ${channelId}`);
-	const response = await axios.get(url, { headers: headers });
+	try {
+		apiToken = await getApiToken();
 
-	if (response.status !== 200) {
-		throw "wrong status code for getShow: " + response.status;
+		headers["Api-Auth"] = "Bearer " + apiToken;
+
+		console.log(`- load ${url} to get show info for ${channelId}`);
+		response = await axios.get(url, { headers: headers });
+
+		if (response.status !== 200) {
+			throw "wrong status code for getShow: " + response.status;
+		}
+
+	} catch(e) {
+		apiToken = null;
+		throw e;
 	}
 
 	const show = getShow(response.data, channelId);
 
 	if (show === null) {
-		throw("show info currently not available");
+		throw "show info currently not available";
 	}
 
 	return show;
