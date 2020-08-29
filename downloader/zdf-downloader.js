@@ -45,10 +45,11 @@ async function getApiToken() {
 		return apiToken;
 	}
 
+	console.log(`- load ${indexUrl} to get api token`);
 	const response = await axios.get(indexUrl);
 
 	if (response.status !== 200) {
-		throw "wrong status code for getShow: " + response.status;
+		throw "wrong status code for getApiToken: " + response.status;
 	}
 
 	let newApiToken = response.data.match(apiTokenRegex);
@@ -68,6 +69,7 @@ exports.getShow = async function (channelId) {
 	const apiToken = await getApiToken();
 	headers["Api-Auth"] = "Bearer " + apiToken;
 
+	console.log(`- load ${url} to get show info for ${channelId}`);
 	const response = await axios.get(url, { headers: headers });
 
 	if (response.status !== 200) {

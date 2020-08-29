@@ -78,6 +78,7 @@ exports.getShow = async function (channelId) {
 		return cachedShow;
 	}
 
+	console.log(`- load ${url} to get show info for ${channelId}`);
 	const response = await axios.get(url);
 
 	if (response.status !== 200) {

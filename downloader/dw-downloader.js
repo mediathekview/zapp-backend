@@ -33,6 +33,8 @@ function getShow(json, channelId) {
 
 exports.getShow = async function (channelId) {
 	const url = urls[channelId];
+
+	console.log(`- load ${url} to get show info for ${channelId}`);
 	const response = await axios.get(url);
 
 	if (response.status !== 200) {
