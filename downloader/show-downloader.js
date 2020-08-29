@@ -1,4 +1,6 @@
-const cache = require("./cache");
+const Cache = require("./cache");
+
+const cache = new Cache();
 
 const downloaders = [
 	require("./ard-downloader"),
@@ -17,7 +19,7 @@ exports.getShow = async function(channelId) {
 	// download
 	for (let downloader of downloaders) {
 		if (downloader.channelIds.includes(channelId)) {
-			return downloader.getShow(channelId).then(cache.save);
+			return downloader.getShow(channelId).then(cache.save.bind(cache));
 		}
 	}
 

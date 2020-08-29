@@ -1,25 +1,30 @@
-const showMap = {};
+class Cache {
 
-exports.save = function (show) {
-	showMap[show.channel] = show;
-	return show;
-};
-
-exports.getShow = function (channelId) {
-	let show = showMap[channelId];
-
-	if (!show) {
-		console.log(`cache miss: ${channelId}`);
-		return null;
+	constructor() {
+		this.showMap = {};
 	}
 
-	if (show.endTime.isBefore()) {
-		console.log(`cache miss: ${channelId}, show too old`);
-		showMap[channelId] = null;
-		return null;
+	save(show, key) {
+		key = key || show.channel;
+		this.showMap[key] = show;
+		return show;
 	}
 
-	console.log(`cache hit: ${channelId} - ${show}`);
+	getShow(channelId) {
+		let show = this.showMap[channelId];
 
-	return show;
-};
+		if (!show) {
+			return null;
+		}
+
+		if (show.endTime.isBefore()) {
+			this.showMap[channelId] = null;
+			return null;
+		}
+
+		return show;
+	}
+
+}
+
+module.exports = Cache;

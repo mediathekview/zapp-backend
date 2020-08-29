@@ -11,9 +11,10 @@ context("Show downloader", function () {
 				try {
 					let show = await showDownloader.getShow(channelId);
 					assert.ok(show.title);
+					assert.equal(show.channel, channelId);
 				}
 				catch(e) {
-					if (e.indexOf("not available") === -1) {
+					if (typeof(e.indexOf) !== "function" || e.indexOf("not available") === -1) {
 						assert.fail("Some unexpected error: " + e);
 					} else {
 						console.error("downloader did not find any show");
