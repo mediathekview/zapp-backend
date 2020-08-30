@@ -1,3 +1,5 @@
+![](https://api.travis-ci.com/mediathekview/zapp-backend.svg?branch=master)
+
 # zapp-backend
 
 Program info API for German public broadcasting services.
