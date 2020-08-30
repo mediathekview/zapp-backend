@@ -16,6 +16,11 @@ This is a small **node.js** server to get current programm information (start an
 1. Run `npm start`.
 1. Open your browser and head to `http://localhost:3000/v1/shows/das_erste` (or replace 3000 with your PORT value) to get program info for ARD.
 
+## Test
+
+- Run `npm test` to run linting and basic function tests.
+- Run `npm lint` to run jshint and check for code style errors.
+
 ## How to use the docker image
 
 `docker run --name zapp-backend -p 80:3000 mediathekview/zapp-backend`
