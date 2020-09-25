@@ -7,6 +7,7 @@ const downloaders = [
 	require("./zdf-downloader"),
 	require("./dw-downloader"),
 	require("./parliament-downloader"),
+	require("./ebs-downloader"),
 ];
 
 /**

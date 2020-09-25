@@ -33,4 +33,6 @@ module.exports = {
 	"wdr": new ChannelInfo("http://wdrfsgeo-lh.akamaihd.net/i/wdrfs_geogeblockt@530016/master.m3u8", "WDR"),
 	"parlamentsfernsehen_1": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk1.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 1"),
 	"parlamentsfernsehen_2": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk2.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 2"),
+	"ebs": new ChannelInfo("https://euc-live.fl.freecaster.net/live/eucom/ebs.m3u8", "Europe by Satellite"),
+	"ebs_plus": new ChannelInfo("https://euc-live.fl.freecaster.net/live/eucom/ebs.m3u8", "Europe by Satellite +"),
 };
