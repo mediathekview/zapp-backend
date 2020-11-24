@@ -1,3 +1,5 @@
+![](https://api.travis-ci.com/mediathekview/zapp-backend.svg?branch=master)
+
 # zapp-backend
 
 Program info API for German public broadcasting services.
@@ -13,6 +15,11 @@ This is a small **node.js** server to get current programm information (start an
 1. Set PORT as an environment variable inside your console. Eg. `PORT=3000` on linux or `SET PORT=3000` on windows.
 1. Run `npm start`.
 1. Open your browser and head to `http://localhost:3000/v1/shows/das_erste` (or replace 3000 with your PORT value) to get program info for ARD.
+
+## Test
+
+- Run `npm test` to run linting and basic function tests.
+- Run `npm lint` to run jshint and check for code style errors.
 
 ## How to use the docker image
 
