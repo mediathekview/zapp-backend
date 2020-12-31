@@ -3,5 +3,6 @@ Dockerfile
 .dockerignore
 .gitignore
 .git
+.github
 .editorconfig
 .jshintrc
