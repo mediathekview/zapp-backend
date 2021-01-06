@@ -14,7 +14,7 @@
     "node": ">= 12.13.1"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "moment-timezone": "^0.5.27",
     "xml2js": "^0.4.23"
