@@ -26,7 +26,7 @@ module.exports = {
 	"ndr_sh": new ChannelInfo("https://ndrfs-lh.akamaihd.net/i/ndrfs_sh@430234/master.m3u8", "NDR Schleswig-Holstein"),
 	"rbb_berlin": new ChannelInfo("https://rbblive-lh.akamaihd.net/i/rbb_berlin@144674/master.m3u8", "rbb Fernsehen Berlin"),
 	"rbb_brandenburg": new ChannelInfo("https://rbblive-lh.akamaihd.net/i/rbb_brandenburg@349369/master.m3u8", "rbb Fernsehen Brandenburg"),
-	"rb": new ChannelInfo("https://rbfs-lh.akamaihd.net/i/rb_fs@438960/master.m3u8", "Radio Bremen"),
+	"rb": new ChannelInfo("https://rbhlslive.akamaized.net/hls/live/2020435/rbfs/master.m3u8", "Radio Bremen"),
 	"sr": new ChannelInfo("http://live2_sr-lh.akamaihd.net/i/sr_universal02@107595/master.m3u8", "SR"),
 	"swr_bw": new ChannelInfo("https://swrbwhls-i.akamaihd.net/hls/live/667638/swrbwd/master.m3u8", "SWR Baden-Württemberg"),
 	"swr_rp": new ChannelInfo("https://swrrphls-i.akamaihd.net/hls/live/667639/swrrpd/master.m3u8", "SWR Rheinland-Pfalz"),
