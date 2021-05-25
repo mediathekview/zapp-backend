@@ -5,7 +5,7 @@ const showDownloader = require("../downloader/show-downloader");
 context("Show downloader", function () {
 
 	// this may run slow - especially on ci
-	this.timeout(4000);
+	this.timeout(10000);
 
 	describe("#getShow() channel overview", function () {
 
