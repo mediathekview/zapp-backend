@@ -3,7 +3,7 @@ const ChannelInfo = require("./ChannelInfo");
 module.exports = {
 	"das_erste": new ChannelInfo("https://mcdn.daserste.de/daserste/de/master.m3u8", "Das Erste"),
 	"zdf": new ChannelInfo("https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8", "ZDF"),
-	"arte": new ChannelInfo("https://artelive-lh.akamaihd.net/i/artelive_de@393591/master.m3u8", "ARTE"),
+	"arte": new ChannelInfo("https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8", "ARTE"),
 	"dreisat": new ChannelInfo("https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8", "3sat"),
 	"kika": new ChannelInfo("https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8", "KiKA"),
 	"phoenix": new ChannelInfo("https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8", "phoenix"),
@@ -30,7 +30,7 @@ module.exports = {
 	"sr": new ChannelInfo("http://live2_sr-lh.akamaihd.net/i/sr_universal02@107595/master.m3u8", "SR"),
 	"swr_bw": new ChannelInfo("https://swrbwhls-i.akamaihd.net/hls/live/667638/swrbwd/master.m3u8", "SWR Baden-Württemberg"),
 	"swr_rp": new ChannelInfo("https://swrrphls-i.akamaihd.net/hls/live/667639/swrrpd/master.m3u8", "SWR Rheinland-Pfalz"),
-	"wdr": new ChannelInfo("http://wdrfsgeo-lh.akamaihd.net/i/wdrfs_geogeblockt@530016/master.m3u8", "WDR"),
+	"wdr": new ChannelInfo("https://mcdn.wdr.de/wdr/wdrfs/de/master.m3u8", "WDR"),
 	"parlamentsfernsehen_1": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk1.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 1"),
 	"parlamentsfernsehen_2": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk2.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 2"),
 };
