@@ -7,7 +7,7 @@ module.exports = {
 	"dreisat": new ChannelInfo("https://zdf-hls-18.akamaized.net/hls/live/2016501/dach/high/master.m3u8", "3sat"),
 	"kika": new ChannelInfo("https://kikageohls.akamaized.net/hls/live/2022693/livetvkika_de/master.m3u8", "KiKA"),
 	"phoenix": new ChannelInfo("https://zdf-hls-19.akamaized.net/hls/live/2016502/de/high/master.m3u8", "phoenix"),
-	"tagesschau24": new ChannelInfo("http://tagesschau-lh.akamaihd.net/i/tagesschau_1@119231/master.m3u8", "tagesschau24"),
+	"tagesschau24": new ChannelInfo("https://tagesschau.akamaized.net/hls/live/2020117/tagesschau/tagesschau_3/master.m3u8", "tagesschau24"),
 	"ard_alpha": new ChannelInfo("https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8", "ARD-alpha"),
 	"zdf_info": new ChannelInfo("https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8", "ZDFinfo"),
 	"zdf_neo": new ChannelInfo("https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8", "ZDFneo"),
