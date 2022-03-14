@@ -1,3 +1,5 @@
+[![Build](https://github.com/mediathekview/zapp-backend/actions/workflows/build.yml/badge.svg)](https://github.com/mediathekview/zapp-backend/actions/workflows/build.yml) [![Publish](https://github.com/mediathekview/zapp-backend/actions/workflows/publish.yml/badge.svg)](https://github.com/mediathekview/zapp-backend/actions/workflows/publish.yml)
+
 # zapp-backend
 
 Program info API for German public broadcasting services.
@@ -18,6 +20,12 @@ This is a small **node.js** server to get current programm information (start an
 
 - Run `npm test` to run linting and basic function tests.
 - Run `npm lint` to run jshint and check for code style errors.
+
+## Deployment
+
+This app gets auto deployed via github action whenever a taged commit is pushed.
+
+To deploy tag your commit using demantic versioning. Make sure to update the version in [index.js](index.js) accordingly.
 
 ## How to use the docker image
 
