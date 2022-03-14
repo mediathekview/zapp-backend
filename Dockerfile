@@ -3,7 +3,6 @@
 # Build stage
 FROM node:lts-alpine AS builder
 LABEL maintainer="nicklas@mediathekview.de"
-USER 1000
 WORKDIR /tmp
 # copy app files
 COPY . .
