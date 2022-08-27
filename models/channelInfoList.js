@@ -27,7 +27,7 @@ module.exports = {
 	"rbb_berlin": new ChannelInfo("https://rbb-hls-berlin.akamaized.net/hls/live/2017824/rbb_berlin/index.m3u8", "rbb Fernsehen Berlin"),
 	"rbb_brandenburg": new ChannelInfo("https://rbb-hls-brandenburg.akamaized.net/hls/live/2017825/rbb_brandenburg/index.m3u8", "rbb Fernsehen Brandenburg"),
 	"rb": new ChannelInfo("https://rbhlslive.akamaized.net/hls/live/2020435/rbfs/master.m3u8", "Radio Bremen"),
-	"sr": new ChannelInfo("http://live2_sr-lh.akamaihd.net/i/sr_universal02@107595/master.m3u8", "SR"),
+	"sr": new ChannelInfo("https://srfs.akamaized.net/hls/live/689649/srfsgeo/master.m3u8", "SR"),
 	"swr_bw": new ChannelInfo("https://swrbwd-hls.akamaized.net/hls/live/2018672/swrbwd/master.m3u8", "SWR Baden-Württemberg"),
 	"swr_rp": new ChannelInfo("https://swrrpd-hls.akamaized.net/hls/live/2018676/swrrpd/master.m3u8", "SWR Rheinland-Pfalz"),
 	"wdr": new ChannelInfo("https://mcdn.wdr.de/wdr/wdrfs/de/master.m3u8", "WDR"),
