@@ -31,6 +31,6 @@ module.exports = {
 	"swr_bw": new ChannelInfo("https://swrbwd-hls.akamaized.net/hls/live/2018672/swrbwd/master.m3u8", "SWR Baden-Württemberg"),
 	"swr_rp": new ChannelInfo("https://swrrpd-hls.akamaized.net/hls/live/2018676/swrrpd/master.m3u8", "SWR Rheinland-Pfalz"),
 	"wdr": new ChannelInfo("https://mcdn.wdr.de/wdr/wdrfs/de/master.m3u8", "WDR"),
-	"parlamentsfernsehen_1": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk1.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 1"),
-	"parlamentsfernsehen_2": new ChannelInfo("https://cldf-hlsgw.r53.cdn.tv1.eu/1000153copo/hk2.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 2"),
+	"parlamentsfernsehen_1": new ChannelInfo("https://bttv-live-z.r53.cdn.tv1.eu/13014bundestag-hk1/_definst_/live/video/hk1_de.smil/playlist.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 1"),
+	"parlamentsfernsehen_2": new ChannelInfo("https://bttv-live-z.r53.cdn.tv1.eu/13014bundestag-hk2/_definst_/live/video/hk2_de.smil/playlist.m3u8", "Parlaments\u00adfern\u00adsehen Kanal 2"),
 };
