@@ -5,7 +5,6 @@ const cache = new Cache();
 const downloaders = [
 	require("./ard-downloader"),
 	require("./zdf-downloader"),
-	require("./dw-downloader"),
 	require("./parliament-downloader"),
 ];
 
