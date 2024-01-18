@@ -14,13 +14,13 @@
     "node": ">= 14.17.6"
   },
   "dependencies": {
-    "axios": "^0.26.0",
+    "axios": "^1.6.5",
     "express": "^4.17.2",
-    "moment-timezone": "^0.5.34",
-    "xml2js": "^0.4.23"
+    "moment-timezone": "^0.5.44",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "jshint": "^2.13.4",
-    "mocha": "^9.2.0"
+    "mocha": "^10.2.0"
   }
 }
