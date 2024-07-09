@@ -2,7 +2,7 @@ const express = require("express");
 const shows = require("./routes/shows");
 const channelInfoList = require("./routes/channelInfoList");
 
-const version = "1.1.17";
+const version = "1.2.2";
 const app = express();
 
 app.use((_, res, next) => {
