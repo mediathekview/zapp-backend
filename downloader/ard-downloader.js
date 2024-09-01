@@ -2,10 +2,10 @@ const axios = require("axios");
 const moment = require("moment-timezone");
 const Show = require("../models/Show");
 
-const baseUrl = "https://programm.ard.de/TV/Export/Now?channel=";
+const baseUrl = "https://programm-api.ard.de/nownext/api/channel?channel=";
 
 const channelIdMap = {
-	"das_erste": "Y3JpZDovL2Rhc2Vyc3RlLmRlL0xpdmVzdHJlYW0tRGFzRXJzdGU",
+	"das_erste": "Y3JpZDovL2Rhc2Vyc3RlLmRlL2xpdmUvY2xpcC9hYmNhMDdhMy0zNDc2LTQ4NTEtYjE2Mi1mZGU4ZjY0NmQ0YzQ",
 	"tagesschau24": "Y3JpZDovL2Rhc2Vyc3RlLmRlL3RhZ2Vzc2NoYXUvbGl2ZXN0cmVhbQ",
 	"br_sued": "Y3JpZDovL2JyLmRlL0xpdmVzdHJlYW0tQlItU8O8ZA",
 	"br_nord": "Y3JpZDovL2JyLmRlL0xpdmVzdHJlYW0tQlItTm9yZA",
@@ -31,17 +31,17 @@ const channelIdMap = {
 exports.channelIds = Object.keys(channelIdMap);
 
 function parseShow(json, channelId) {
-	const show = new Show(json.title);
-	show.subtitle = json.sub_title;
-	show.description = json.short_text;
+	const show = new Show(json.title.short);
+	show.subtitle = !json.title.subTitle ? null : json.title.subTitle;
+	show.description = json.synopsis;
 	show.channel = channelId;
-	show.startTime = moment(json.start);
-	show.endTime = moment(json.stop);
+	show.startTime = moment(json.startDate);
+	show.endTime = moment(json.endDate);
 	return show;
 }
 
-function getShow(json, channelId, apiChannelId) {
-	let broadcasts = json.events[apiChannelId];
+function getShow(json, channelId) {
+	let broadcasts = json.events;
 
 	if (!broadcasts) {
 		return null;
@@ -75,7 +75,7 @@ exports.getShow = async function (channelId) {
 		throw "wrong status code for getShow: " + response.status;
 	}
 
-	const show = getShow(response.data, channelId, apiChannelId);
+	const show = getShow(response.data, channelId);
 
 	if (show === null) {
 		throw("show info currently not available");
