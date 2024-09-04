@@ -1,6 +1,6 @@
-const express = require("express");
-const shows = require("./routes/shows");
-const channelInfoList = require("./routes/channelInfoList");
+import express from "express";
+import shows from "./routes/shows.js";
+import channelInfoList from "./routes/channelInfoList.js";
 
 const version = "1.2.4";
 const app = express();

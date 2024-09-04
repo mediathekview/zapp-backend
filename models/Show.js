@@ -1,6 +1,6 @@
-const moment = require("moment-timezone");
+import moment from "moment-timezone";
 
-class Show {
+export default class Show {
 
 	constructor(title) {
 		this.title = title;
@@ -34,5 +34,3 @@ class Show {
 		return show;
 	}
 }
-
-module.exports = Show;

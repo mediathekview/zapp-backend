@@ -1,6 +1,6 @@
-const assert = require("assert");
-const channelInfoList = require("../models/channelInfoList.js");
-const showDownloader = require("../downloader/show-downloader");
+import assert from "assert";
+import { channelInfoList } from "../models/channelInfoList.js";
+import showDownloader from "../downloader/show-downloader.js";
 
 context("Show downloader", function () {
 
@@ -17,8 +17,8 @@ context("Show downloader", function () {
 					assert.equal(show.channel, channelId);
 					assert.ok(show.isRunningNow());
 				}
-				catch(e) {
-					if (typeof(e.indexOf) !== "function" || e.indexOf("not available") === -1) {
+				catch (e) {
+					if (typeof (e.indexOf) !== "function" || e.indexOf("not available") === -1) {
 						assert.fail("Some unexpected error: " + e);
 					} else {
 						console.error("downloader did not find any show");
@@ -38,7 +38,7 @@ context("Show downloader", function () {
 				await showDownloader.getShow("test-channel-id");
 				assert.fail();
 			}
-			catch(e) {
+			catch (e) {
 
 			}
 		});

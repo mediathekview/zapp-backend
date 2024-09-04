@@ -1,6 +1,6 @@
-const axios = require("axios");
-const moment = require("moment-timezone");
-const Show = require("../models/Show");
+import axios from "axios";
+import moment from "moment-timezone";
+import Show from "../models/Show.js";
 
 const apiTokenRegex = new RegExp("apiToken[\\s\:\"\"]*([\\w\-\.]{40,})");
 const indexUrl = "https://www.zdf.de/live-tv";
@@ -22,9 +22,9 @@ const channelIdMap = {
 
 let apiToken = false;
 
-exports.channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo", "arte"];
+const channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo", "arte"];
 
-function getShow(json, channelId) {
+function getShowFromJson(json, channelId) {
 	let broadcast = json["http://zdf.de/rels/cmdm/broadcasts"][0];
 
 	if (!broadcast) {
@@ -61,7 +61,7 @@ async function getApiToken() {
 	}
 }
 
-exports.getShow = async function (channelId) {
+async function getShow(channelId) {
 	const urlChannel = channelIdMap[channelId];
 	const time = moment.utc().format();
 	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
@@ -85,11 +85,16 @@ exports.getShow = async function (channelId) {
 		throw e;
 	}
 
-	const show = getShow(response.data, channelId);
+	const show = getShowFromJson(response.data, channelId);
 
 	if (show === null) {
 		throw "show info currently not available";
 	}
 
 	return show;
+}
+
+export default {
+	channelIds,
+	getShow
 };

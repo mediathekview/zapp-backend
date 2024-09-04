@@ -1,6 +1,6 @@
-const ChannelInfo = require("./ChannelInfo");
+import ChannelInfo from "./ChannelInfo.js";
 
-module.exports = {
+export const channelInfoList = {
 	"das_erste": new ChannelInfo("https://mcdn.daserste.de/daserste/de/master.m3u8", "Das Erste"),
 	"zdf": new ChannelInfo("https://zdf-hls-15.akamaized.net/hls/live/2016498/de/high/master.m3u8", "ZDF"),
 	"arte": new ChannelInfo("https://artesimulcast.akamaized.net/hls/live/2030993/artelive_de/index.m3u8", "ARTE"),

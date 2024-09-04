@@ -1,4 +1,4 @@
-class ChannelInfo {
+export default class ChannelInfo {
 
 	constructor(streamUrl, name) {
 		this.streamUrl = streamUrl;
@@ -6,5 +6,3 @@ class ChannelInfo {
 	}
 
 }
-
-module.exports = ChannelInfo;

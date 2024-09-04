@@ -1,11 +1,14 @@
-const Cache = require("./cache");
+import Cache from "./cache.js";
+import ArdDownloader from "./ard-downloader.js";
+import ZdfDownloader from "./zdf-downloader.js";
+import ParliamentDownloader from "./parliament-downloader.js";
 
 const cache = new Cache();
 
 const downloaders = [
-	require("./ard-downloader"),
-	require("./zdf-downloader"),
-	require("./parliament-downloader"),
+	ArdDownloader,
+	ZdfDownloader,
+	ParliamentDownloader,
 ];
 
 /**
@@ -20,7 +23,7 @@ const requestTimeMap = {};
 const minWaitTimeMillis = 2 * 60 * 1000; // 2 minutes
 
 
-exports.getShow = async function(channelId) {
+async function getShow(channelId) {
 	// look up in cache
 	let show = cache.getShow(channelId);
 	if (show !== null) {
@@ -33,7 +36,7 @@ exports.getShow = async function(channelId) {
 		if (downloader.channelIds.includes(channelId)) {
 
 			if (requestTimeMap[channelId] && (Date.now() - requestTimeMap[channelId]) < minWaitTimeMillis) {
-				throw("show info currently not available; api throtteling active");
+				throw ("show info currently not available; api throtteling active");
 			}
 
 			requestTimeMap[channelId] = Date.now();
@@ -43,4 +46,6 @@ exports.getShow = async function(channelId) {
 
 	// neither cache nor download available
 	throw "no downloader available";
-};
+}
+
+export default { getShow };

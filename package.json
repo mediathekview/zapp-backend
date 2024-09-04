@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Program info API for German public broadcasting services.",
   "main": "index.js",
+	"type": "module",
   "scripts": {
     "start": "node index.js",
     "test": "npm run lint && mocha",
-    "lint": "npx jshint . --exclude node_modules || true"
+    "lint": "npx jshint . --exclude node_modules"
   },
   "author": "Christine Coenen",
   "license": "MIT",

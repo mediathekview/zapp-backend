@@ -1,4 +1,4 @@
-class Cache {
+export default class Cache {
 
 	constructor() {
 		this.showMap = {};
@@ -26,5 +26,3 @@ class Cache {
 	}
 
 }
-
-module.exports = Cache;

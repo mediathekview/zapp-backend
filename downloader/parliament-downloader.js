@@ -1,14 +1,14 @@
-const axios = require("axios");
-const moment = require("moment-timezone");
-const xml2js = require("xml2js");
-const Show = require("../models/Show");
+import axios from "axios";
+import moment from "moment-timezone";
+import xml2js from "xml2js";
+import Show from "../models/Show.js";
 
 const urls = {
 	parlamentsfernsehen_1: "https://www.bundestag.de/includes/datasources/tv.xml",
 	parlamentsfernsehen_2: "https://www.bundestag.de/includes/datasources/tv2.xml",
 };
 
-exports.channelIds = ["parlamentsfernsehen_1", "parlamentsfernsehen_2"];
+const channelIds = ["parlamentsfernsehen_1", "parlamentsfernsehen_2"];
 
 function parseShow(showData, channelId) {
 	let show = new Show(showData.langtitel[0]);
@@ -20,7 +20,7 @@ function parseShow(showData, channelId) {
 	return show;
 }
 
-async function getShow(xml, channelId) {
+async function getShowFromXml(xml, channelId) {
 	const data = await xml2js.parseStringPromise(xml);
 
 	if (data.tvprogramm.length === 0) {
@@ -38,7 +38,7 @@ async function getShow(xml, channelId) {
 	return null;
 }
 
-exports.getShow = async function (channelId) {
+async function getShow(channelId) {
 	const url = urls[channelId];
 
 	console.log(`- load ${url} to get show info for ${channelId}`);
@@ -48,11 +48,16 @@ exports.getShow = async function (channelId) {
 		throw "wrong status code for getShow: " + response.status;
 	}
 
-	const show = await getShow(response.data, channelId);
+	const show = await getShowFromXml(response.data, channelId);
 
 	if (show === null) {
-		throw("show info currently not available");
+		throw ("show info currently not available");
 	}
 
 	return show;
+}
+
+export default {
+	channelIds,
+	getShow
 };

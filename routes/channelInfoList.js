@@ -1,5 +1,7 @@
-const channelInfoList = require("./../models/channelInfoList");
+import { channelInfoList } from "./../models/channelInfoList.js";
 
-exports.get = function(req, res) {
+function get(req, res) {
 	res.send(channelInfoList);
-};
+}
+
+export default { get };

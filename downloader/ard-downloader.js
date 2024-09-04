@@ -1,6 +1,6 @@
-const axios = require("axios");
-const moment = require("moment-timezone");
-const Show = require("../models/Show");
+import axios from "axios";
+import moment from "moment-timezone";
+import Show from "../models/Show.js";
 
 const baseUrl = "https://programm-api.ard.de/nownext/api/channel?channel=";
 
@@ -28,7 +28,7 @@ const channelIdMap = {
 	"ard_alpha": "Y3JpZDovL2JyLmRlL0xpdmVzdHJlYW0tQVJELUFscGhh"
 };
 
-exports.channelIds = Object.keys(channelIdMap);
+const channelIds = Object.keys(channelIdMap);
 
 function parseShow(json, channelId) {
 	const show = new Show(json.title.short);
@@ -40,7 +40,7 @@ function parseShow(json, channelId) {
 	return show;
 }
 
-function getShow(json, channelId) {
+function getShowFromJson(json, channelId) {
 	let broadcasts = json.events;
 
 	if (!broadcasts) {
@@ -64,7 +64,7 @@ function getShow(json, channelId) {
 	return null;
 }
 
-exports.getShow = async function (channelId) {
+async function getShow(channelId) {
 	const apiChannelId = channelIdMap[channelId];
 	const url = baseUrl + apiChannelId;
 
@@ -75,11 +75,16 @@ exports.getShow = async function (channelId) {
 		throw "wrong status code for getShow: " + response.status;
 	}
 
-	const show = getShow(response.data, channelId);
+	const show = getShowFromJson(response.data, channelId);
 
 	if (show === null) {
-		throw("show info currently not available");
+		throw "show info currently not available";
 	}
 
 	return show;
+}
+
+export default {
+	channelIds,
+	getShow
 };
