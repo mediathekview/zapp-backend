@@ -1,6 +1,6 @@
 {
   "name": "zapp-backend",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Program info API for German public broadcasting services.",
   "main": "index.js",
   "type": "module",
