@@ -11,7 +11,7 @@ export const channelInfoList = {
 	"ard_alpha": new ChannelInfo("https://mcdn.br.de/br/fs/ard_alpha/hls/de/master.m3u8", "ARD-alpha"),
 	"zdf_info": new ChannelInfo("https://zdf-hls-17.akamaized.net/hls/live/2016500/de/high/master.m3u8", "ZDFinfo"),
 	"zdf_neo": new ChannelInfo("https://zdf-hls-16.akamaized.net/hls/live/2016499/de/high/master.m3u8", "ZDFneo"),
-	"one": new ChannelInfo("https://mcdn.one.ard.de/ardone/hls/master.m3u8", "ONE"),
+	"one": new ChannelInfo("https://mcdn-one.ard.de/ardone/hls/master.m3u8", "ONE"),
 	"br_nord": new ChannelInfo("https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8", "BR Nord"),
 	"br_sued": new ChannelInfo("https://mcdn.br.de/br/fs/bfs_sued/hls/de/master.m3u8", "BR Süd"),
 	"hr": new ChannelInfo("https://hrhls.akamaized.net/hls/live/2024525/hrhls/index.m3u8", "HR"),
