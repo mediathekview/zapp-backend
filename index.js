@@ -2,7 +2,7 @@ import express from "express";
 import shows from "./routes/shows.js";
 import channelInfoList from "./routes/channelInfoList.js";
 
-const version = "1.2.8";
+const version = "1.2.9";
 const app = express();
 
 app.use((_, res, next) => {
