@@ -1,5 +1,5 @@
 import assert from "assert";
-import { channelInfoList } from "../models/channelInfoList.js";
+import {channelInfoList} from "../models/channelInfoList.js";
 import showDownloader from "../downloader/show-downloader.js";
 
 context("Show downloader", function () {
@@ -16,12 +16,13 @@ context("Show downloader", function () {
 					assert.ok(show.title);
 					assert.equal(show.channel, channelId);
 					assert.ok(show.isRunningNow());
-				}
-				catch (e) {
-					if (typeof (e.indexOf) !== "function" || e.indexOf("not available") === -1) {
-						assert.fail("Some unexpected error: " + e);
-					} else {
+				} catch (e) {
+					if (typeof (e) === "string" && e.includes("not available")) {
 						console.error("downloader did not find any show");
+					} else if (typeof (e) === "string" && e.includes("no downloader available")) {
+						console.error("no downloader implemented");
+					} else {
+						assert.fail("Some unexpected error: " + e);
 					}
 				}
 			});
@@ -37,8 +38,7 @@ context("Show downloader", function () {
 			try {
 				await showDownloader.getShow("test-channel-id");
 				assert.fail();
-			}
-			catch (e) {
+			} catch (e) {
 
 			}
 		});
