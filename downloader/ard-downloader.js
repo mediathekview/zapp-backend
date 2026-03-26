@@ -25,7 +25,8 @@ const channelIdMap = {
 	"swr_rp": "Y3JpZDovL3N3ci5kZS8xMzQ4MTIzMA",
 	"wdr": "Y3JpZDovL3dkci5kZS9CZWl0cmFnLTNkYTY2NGRlLTE4YzItNDY1MC1hNGZmLTRmNjQxNDcyMDcyYg",
 	"one": "Y3JpZDovL3dkci5kZS9CZWl0cmFnLTFlNjA0YWFlLTViODctNGMzNC04ZDhmLTg4OWI1ZjE2ZDU3Mw",
-	"ard_alpha": "Y3JpZDovL2JyLmRlL0xpdmVzdHJlYW0tQVJELUFscGhh"
+	"ard_alpha": "Y3JpZDovL2JyLmRlL0xpdmVzdHJlYW0tQVJELUFscGhh",
+	"arte": "Y3JpZDovL2FydGUuZGUvTGl2ZXN0cmVhbS1BUlRF",
 };
 
 const channelIds = Object.keys(channelIdMap);

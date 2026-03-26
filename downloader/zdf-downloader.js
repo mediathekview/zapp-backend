@@ -17,12 +17,11 @@ const channelIdMap = {
 	"phoenix": "phoenix",
 	"zdf_info": "zdfinfo",
 	"zdf_neo": "ZDFneo",
-	"arte": "arte",
 };
 
 let apiToken = false;
 
-const channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo", "arte"];
+const channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo"];
 
 function getShowFromJson(json, channelId) {
 	let broadcast = json["http://zdf.de/rels/cmdm/broadcasts"][0];
