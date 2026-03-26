@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment-timezone";
 import Show from "../models/Show.js";
 
-const apiTokenRegex = new RegExp("videoToken[\\\\s\:\"\{]*apiToken[\\\\s\:\"]*([\\w\-\.]{40,})");
+const apiTokenRegex = new RegExp("videoToken[\\\\s:\"{]*apiToken[\\\\s:\"]*([\\w-.]{40,})");
 const indexUrl = "https://www.zdf.de/live-tv";
 const baseUrl = "https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc";
 const headers = {
@@ -65,7 +65,7 @@ async function getShow(channelId) {
 	const time = moment.utc().format();
 	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
-	let response = null;
+	let response;
 
 	try {
 		apiToken = await getApiToken();

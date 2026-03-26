@@ -38,8 +38,8 @@ context("Show downloader", function () {
 			try {
 				await showDownloader.getShow("test-channel-id");
 				assert.fail();
-			} catch (e) {
-
+			} catch (_e) {
+				//
 			}
 		});
 
