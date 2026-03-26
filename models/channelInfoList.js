@@ -14,7 +14,7 @@ export const channelInfoList = {
 	"one": new ChannelInfo("https://mcdn-one.ard.de/ardone/hls/master.m3u8", "ONE"),
 	"br_nord": new ChannelInfo("https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8", "BR Nord"),
 	"br_sued": new ChannelInfo("https://mcdn.br.de/br/fs/bfs_sued/hls/de/master.m3u8", "BR Süd"),
-	"hr": new ChannelInfo("https://hrhls.akamaized.net/hls/live/2024525/hrhls/index.m3u8", "HR"),
+	"hr": new ChannelInfo("https://hr-live.ard-mcdn.de/hr/live/hls/de/master.m3u8", "HR"),
 	"mdr_sachsen": new ChannelInfo("https://mdrtvsnhls.akamaized.net/hls/live/2016928/mdrtvsn/master.m3u8", "MDR Sachsen"),
 	"mdr_sachsen_anhalt": new ChannelInfo("https://mdrtvsahls.akamaized.net/hls/live/2016879/mdrtvsa/master.m3u8", "MDR Sachsen-Anhalt"),
 	"mdr_thueringen": new ChannelInfo("https://mdrtvthhls.akamaized.net/hls/live/2016880/mdrtvth/master.m3u8", "MDR Thüringen"),
