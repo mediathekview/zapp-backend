@@ -1,12 +1,14 @@
 import Cache from "./cache.js";
 import ArdDownloader from "./ard-downloader.js";
 import ZdfDownloader from "./zdf-downloader.js";
+import ParliamentDownloader from "./parliament-downloader.js";
 
 const cache = new Cache();
 
 const downloaders = [
 	ArdDownloader,
 	ZdfDownloader,
+	ParliamentDownloader,
 ];
 
 /**

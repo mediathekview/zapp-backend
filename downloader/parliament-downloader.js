@@ -4,8 +4,8 @@ import xml2js from "xml2js";
 import Show from "../models/Show.js";
 
 const urls = {
-	parlamentsfernsehen_1: "https://www.bundestag.de/includes/datasources/tv.xml",
-	parlamentsfernsehen_2: "https://www.bundestag.de/includes/datasources/tv2.xml",
+	parlamentsfernsehen_1: "https://www.bundestag.de/apps/plenar/plenar/tv/tvxml/tv.xml",
+	parlamentsfernsehen_2: "https://www.bundestag.de/apps/plenar/plenar/tv/tvxml/tv2.xml",
 };
 
 const channelIds = ["parlamentsfernsehen_1", "parlamentsfernsehen_2"];
