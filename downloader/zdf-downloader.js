@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment from "moment-timezone";
 import Show from "../models/Show.js";
 
@@ -45,13 +44,14 @@ async function getApiToken() {
 	}
 
 	console.log(`- load ${indexUrl} to get api token`);
-	const response = await axios.get(indexUrl);
+	const response = await fetch(indexUrl);
 
-	if (response.status !== 200) {
+	if (!response.ok) {
 		throw "wrong status code for getApiToken: " + response.status;
 	}
 
-	let newApiToken = response.data.match(apiTokenRegex);
+	const responseText = await response.text();
+	const newApiToken = responseText.match(apiTokenRegex);
 
 	if (newApiToken && newApiToken.length >= 2) {
 		return newApiToken[1];
@@ -73,9 +73,9 @@ async function getShow(channelId) {
 		headers["Api-Auth"] = "Bearer " + apiToken;
 
 		console.log(`- load ${url} to get show info for ${channelId}`);
-		response = await axios.get(url, { headers: headers });
+		response = await fetch(url, { headers: headers });
 
-		if (response.status !== 200) {
+		if (!response.ok) {
 			throw "wrong status code for getShow: " + response.status;
 		}
 
@@ -84,7 +84,8 @@ async function getShow(channelId) {
 		throw e;
 	}
 
-	const show = getShowFromJson(response.data, channelId);
+	const json = await response.json();
+	const show = getShowFromJson(json, channelId);
 
 	if (show === null) {
 		throw "show info currently not available";

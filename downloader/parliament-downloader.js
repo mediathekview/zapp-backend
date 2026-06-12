@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment from "moment-timezone";
 import xml2js from "xml2js";
 import Show from "../models/Show.js";
@@ -42,13 +41,14 @@ async function getShow(channelId) {
 	const url = urls[channelId];
 
 	console.log(`- load ${url} to get show info for ${channelId}`);
-	const response = await axios.get(url);
+	const response = await fetch(url);
 
-	if (response.status !== 200) {
+	if (!response.ok) {
 		throw "wrong status code for getShow: " + response.status;
 	}
 
-	const show = await getShowFromXml(response.data, channelId);
+	const responseText = await response.text();
+	const show = await getShowFromXml(responseText, channelId);
 
 	if (show === null) {
 		throw ("show info currently not available");
