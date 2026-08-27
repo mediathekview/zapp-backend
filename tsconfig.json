@@ -3,8 +3,16 @@
 		"target": "esnext",
 		"module": "nodenext",
 		"lib": ["esnext"],
+		"types": ["node"],
 		"rewriteRelativeImportExtensions": true,
 		"erasableSyntaxOnly": true,
-		"verbatimModuleSyntax": true
+		"verbatimModuleSyntax": true,
+		"allowJs": true,
+		"include": [
+			"src/**/*"
+		],
+		"exclude": [
+			"node_modules"
+		]
 	}
 }
