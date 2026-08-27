@@ -13,5 +13,6 @@ insert_final_newline = true
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{js,html,css}]
-indent_style = tab
+[*.yml]
+indent_size = 2
+indent_style = space

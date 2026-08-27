@@ -7,11 +7,11 @@ function sendErrorResponse(e, res) {
 	}
 
 	console.error(message);
-	res.send({ error: message });
+	res.send({error: message});
 }
 
 function sendShowsResponse(shows, res) {
-	res.send({ shows: shows });
+	res.send({shows: shows});
 }
 
 function findByChannel(req, res) {
@@ -20,4 +20,4 @@ function findByChannel(req, res) {
 		.catch(e => sendErrorResponse(e, res));
 }
 
-export default { findByChannel };
+export default {findByChannel};

@@ -48,4 +48,4 @@ async function getShow(channelId) {
 	throw "no downloader available";
 }
 
-export default { getShow };
+export default {getShow};

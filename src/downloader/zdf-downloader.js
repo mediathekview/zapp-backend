@@ -73,13 +73,13 @@ async function getShow(channelId) {
 		headers["Api-Auth"] = "Bearer " + apiToken;
 
 		console.log(`- load ${url} to get show info for ${channelId}`);
-		response = await fetch(url, { headers: headers });
+		response = await fetch(url, {headers: headers});
 
 		if (!response.ok) {
 			throw "wrong status code for getShow: " + response.status;
 		}
 
-	} catch(e) {
+	} catch (e) {
 		apiToken = null;
 		throw e;
 	}
