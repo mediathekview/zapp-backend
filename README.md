@@ -25,7 +25,7 @@ This is a small **node.js** server to get current programm information (start an
 
 This app gets auto deployed via github action whenever a taged commit is pushed.
 
-To deploy tag your commit using demantic versioning. Make sure to update the version in [index.js](index.js) accordingly.
+To deploy tag your commit using demantic versioning. Make sure to update the version in [index.js](src/index.js) accordingly.
 
 ## How to use the docker image
 

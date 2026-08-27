@@ -27,7 +27,7 @@ export default defineConfig([
 
 	// tests
 	{
-		basePath: "test",
+		basePath: "src/test",
 		languageOptions: {
 			globals: {
 				...globals.mocha,

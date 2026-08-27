@@ -1,4 +1,4 @@
-import downloader from "./../downloader/show-downloader.js";
+import downloader from "../downloader/show-downloader.js";
 
 function sendErrorResponse(e, res) {
 	let message = e.message;
