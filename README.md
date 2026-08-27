@@ -13,7 +13,7 @@ This is a small **node.js** server to get current programm information (start an
 1. Check out the project using Git.
 1. Run `npm install` inside the newly created directory.
 1. Set PORT as an environment variable inside your console. Eg. `PORT=3000` on linux or `SET PORT=3000` (CMD) or `$env:PORT=3000` (PowerShell) on windows.
-1. Run `npm start`.
+1. Run `npm start` (or `npm run dev` for development).
 1. Open your browser and head to `http://localhost:3000/v1/shows/das_erste` (or replace 3000 with your PORT value) to get program info for ARD.
 
 ## Test

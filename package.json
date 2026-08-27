@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
+    "dev": "node --watch-path=src src/index.js",
     "test": "npm run lint && mocha src/test",
     "lint": "npx eslint src"
   },
