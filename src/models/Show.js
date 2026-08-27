@@ -1,3 +1,6 @@
+import isInPast from "../helper/isInPast.js";
+import isInFuture from "../helper/isInFuture.js";
+
 export default class Show {
 
 	constructor(title) {
@@ -5,6 +8,10 @@ export default class Show {
 	}
 
 	isRunningNow() {
-		return this.startTime.isBefore() && this.endTime.isAfter();
+		return isInPast(this.startTime) && isInFuture(this.endTime);
+	}
+
+	isFinished() {
+		return isInPast(this.endTime);
 	}
 }

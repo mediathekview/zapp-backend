@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import Show from "../models/Show.js";
 
 const baseUrl = "https://programm-api.ard.de/nownext/api/channel?channel=";
@@ -35,8 +34,8 @@ function parseShow(json, channelId) {
 	show.subtitle = !json.title.subTitle ? null : json.title.subTitle;
 	show.description = json.synopsis;
 	show.channel = channelId;
-	show.startTime = moment(json.startDate);
-	show.endTime = moment(json.endDate);
+	show.startTime = Temporal.Instant.from(json.startDate);
+	show.endTime = Temporal.Instant.from(json.endDate);
 	return show;
 }
 

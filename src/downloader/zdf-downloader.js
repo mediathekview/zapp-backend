@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import Show from "../models/Show.js";
 
 const apiTokenRegex = new RegExp("videoToken[\\\\s:\"{]*apiToken[\\\\s:\"]*([\\w-.]{40,})");
@@ -33,8 +32,8 @@ function getShowFromJson(json, channelId) {
 	show.subtitle = broadcast.subtitle;
 	show.description = broadcast.text;
 	show.channel = channelId;
-	show.startTime = moment(broadcast.airtimeBegin);
-	show.endTime = moment(broadcast.airtimeEnd);
+	show.startTime = Temporal.Instant.from(broadcast.airtimeBegin);
+	show.endTime = Temporal.Instant.from(broadcast.airtimeEnd);
 	return show;
 }
 
@@ -62,7 +61,7 @@ async function getApiToken() {
 
 async function getShow(channelId) {
 	const urlChannel = channelIdMap[channelId];
-	const time = moment.utc().format();
+	const time = Temporal.Now.instant().round("second");
 	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
 
 	let response;

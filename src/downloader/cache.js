@@ -17,7 +17,7 @@ export default class Cache {
 			return null;
 		}
 
-		if (show.endTime.isBefore()) {
+		if (show.isFinished()) {
 			this.showMap[channelId] = null;
 			return null;
 		}

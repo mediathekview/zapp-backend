@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import xml2js from "xml2js";
 import Show from "../models/Show.js";
 
@@ -13,8 +12,8 @@ function parseShow(showData, channelId) {
 	let show = new Show(showData.langtitel[0]);
 	show.description = showData.infos[0] || null;
 	show.channel = channelId;
-	show.startTime = moment(showData.anfangUnix * 1000);
-	show.endTime = moment(showData.endeUnix * 1000);
+	show.startTime = Temporal.Instant.fromEpochMilliseconds(showData.anfangUnix * 1000);
+	show.endTime = Temporal.Instant.fromEpochMilliseconds(showData.endeUnix * 1000);
 	show.subtitle = showData.live[0] || "Aufzeichnung vom " + showData.aufzeichnungsdatum[0];
 	return show;
 }
