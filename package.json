@@ -24,6 +24,7 @@
 		"@types/node": "^26.4.0",
 		"eslint": "^10.1.0",
 		"globals": "^17.4.0",
-		"mocha": "^11.7.5"
+		"mocha": "^11.7.5",
+		"typescript-eslint": "^8.68.0"
 	}
 }
