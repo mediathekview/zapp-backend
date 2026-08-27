@@ -17,5 +17,6 @@ app.use((_, res, next) => {
 app.get("/v1/shows/:channelId", shows.findByChannel);
 app.get("/v1/channelInfoList", channelInfoList.get);
 
-app.listen(process.env.PORT);
-console.log(`Listening on port ${process.env.PORT ?? 3000}...`);
+const port = process.env.PORT ?? 3000;
+app.listen(port);
+console.log(`Listening on port ${port}...`);
