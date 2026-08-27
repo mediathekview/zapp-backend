@@ -4,7 +4,7 @@
 
 Program info API for German public broadcasting services.
 
-This is a small **node.js** server to get current programm information (start and end time, title, description, etc.) from many German public broadcasting services as JSON. It is used by the Android app [Zapp](https://github.com/cemrich/zapp)
+This is a small **node.js** server to get current program information (start and end time, title, description, etc.) from many German public broadcasting services as JSON. It is used by the Android app [Zapp](https://github.com/cemrich/zapp)
 
 
 ## Getting started
@@ -23,9 +23,9 @@ This is a small **node.js** server to get current programm information (start an
 
 ## Deployment
 
-This app gets auto deployed via github action whenever a taged commit is pushed.
+This app gets auto deployed via github action whenever a tagged commit is pushed.
 
-To deploy tag your commit using demantic versioning. Make sure to update the version in [index.js](src/index.js) accordingly.
+To deploy tag your commit using semantic versioning. Make sure to update the version in [index.js](src/index.js) accordingly.
 
 ## How to use the docker image
 
