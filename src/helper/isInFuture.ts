@@ -1,0 +1,4 @@
+export default function isInFuture(instant: Temporal.Instant): boolean {
+	const now = Temporal.Now.instant();
+	return Temporal.Instant.compare(instant, now) === 1;
+}

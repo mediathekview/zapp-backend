@@ -1,5 +1,5 @@
-import isInPast from "../helper/isInPast.js";
-import isInFuture from "../helper/isInFuture.js";
+import isInPast from "../helper/isInPast.ts";
+import isInFuture from "../helper/isInFuture.ts";
 
 export default class Show {
 
