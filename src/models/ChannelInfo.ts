@@ -1,6 +1,9 @@
 export default class ChannelInfo {
 
-	constructor(streamUrl, name) {
+	streamUrl: string;
+	name: string;
+
+	constructor(streamUrl: string, name: string) {
 		this.streamUrl = streamUrl;
 		this.name = name;
 	}

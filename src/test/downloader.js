@@ -1,5 +1,5 @@
 import assert from "assert";
-import {channelInfoList} from "../models/channelInfoList.js";
+import {channelInfoList} from "../models/channelInfoList.ts";
 import showDownloader from "../downloader/show-downloader.js";
 
 context("Show downloader", function () {

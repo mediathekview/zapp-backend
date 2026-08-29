@@ -1,6 +1,6 @@
 import express from "express";
 import shows from "./routes/shows.js";
-import channelInfoList from "./routes/channelInfoList.js";
+import channelInfoList from "./routes/channelInfoList.ts";
 
 const version = "1.3.1";
 const app = express();
