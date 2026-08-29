@@ -28,7 +28,7 @@ app [Zapp](https://github.com/cemrich/zapp)
 
 This app gets auto deployed via github action whenever a tagged commit is pushed.
 
-To deploy tag your commit using semantic versioning. Make sure to update the version in [index.js](src/index.js)
+To deploy tag your commit using semantic versioning. Make sure to update the version in [index.ts](src/index.ts)
 accordingly.
 
 ## How to use the docker image

@@ -1,11 +1,11 @@
-import express from "express";
+import express, {type NextFunction, type Request, type Response} from "express";
 import shows from "./routes/shows.js";
 import channelInfoList from "./routes/channelInfoList.ts";
 
 const version = "1.3.1";
 const app = express();
 
-app.use((_, res, next) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
 	res.setHeader("Version", version);
 
 	res.header("Access-Control-Allow-Origin", "*");
