@@ -23,12 +23,12 @@ const requestTimeMap = {};
 const minWaitTimeMillis = 2 * 60 * 1000; // 2 minutes
 
 
-async function getShow(channelId) {
+async function getShows(channelId) {
 	// look up in cache
-	let show = cache.getShow(channelId);
-	if (show !== null) {
+	let shows = cache.getShows(channelId);
+	if (shows !== null) {
 		console.log(`- ${channelId} was loaded from main cache`);
-		return show;
+		return shows;
 	}
 
 	// download
@@ -40,7 +40,7 @@ async function getShow(channelId) {
 			}
 
 			requestTimeMap[channelId] = Date.now();
-			return downloader.getShow(channelId).then(cache.save.bind(cache));
+			return downloader.getShows(channelId).then(cache.save.bind(cache));
 		}
 	}
 
@@ -48,4 +48,4 @@ async function getShow(channelId) {
 	throw "no downloader available";
 }
 
-export default {getShow};
+export default {getShows};

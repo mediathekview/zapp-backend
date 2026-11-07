@@ -1,6 +1,11 @@
 import xml2js from "xml2js";
 import Show from "../models/Show.js";
 
+/**
+ * Maximum number of shows (current one and upcoming ones) returned per channel.
+ */
+const maxShows = 3;
+
 const urls = {
 	parlamentsfernsehen_1: "https://www.bundestag.de/apps/plenar/plenar/tv/tvxml/tv.xml",
 	parlamentsfernsehen_2: "https://www.bundestag.de/apps/plenar/plenar/tv/tvxml/tv2.xml",
@@ -18,45 +23,46 @@ function parseShow(showData, channelId) {
 	return show;
 }
 
-async function getShowFromXml(xml, channelId) {
-	const data = await xml2js.parseStringPromise(xml);
-
+function getShowsFromXmlData(data, channelId) {
 	if (data.tvprogramm.length === 0) {
 		return null;
 	}
 
-	for (let show of data.tvprogramm.sendung) {
-		let parsedShow = parseShow(show, channelId);
+	const shows = data.tvprogramm.sendung.map(sendung => parseShow(sendung, channelId));
+	shows.sort((a, b) => Temporal.Instant.compare(a.startTime, b.startTime));
 
-		if (parsedShow.isRunningNow()) {
-			return parsedShow;
-		}
+	// current show must be the first one; everything before is finished
+	const currentIndex = shows.findIndex(show => show.isRunningNow());
+
+	if (currentIndex === -1) {
+		return null;
 	}
 
-	return null;
+	return shows.slice(currentIndex, currentIndex + maxShows);
 }
 
-async function getShow(channelId) {
+async function getShows(channelId) {
 	const url = urls[channelId];
 
 	console.log(`- load ${url} to get show info for ${channelId}`);
 	const response = await fetch(url);
 
 	if (!response.ok) {
-		throw "wrong status code for getShow: " + response.status;
+		throw "wrong status code for getShows: " + response.status;
 	}
 
 	const responseText = await response.text();
-	const show = await getShowFromXml(responseText, channelId);
+	const data = await xml2js.parseStringPromise(responseText);
+	const shows = getShowsFromXmlData(data, channelId);
 
-	if (show === null) {
-		throw ("show info currently not available");
+	if (shows === null) {
+		throw "show info currently not available";
 	}
 
-	return show;
+	return shows;
 }
 
 export default {
 	channelIds,
-	getShow
+	getShows
 };

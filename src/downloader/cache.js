@@ -1,28 +1,28 @@
 export default class Cache {
 
 	constructor() {
-		this.showMap = {};
+		this.showsMap = {};
 	}
 
-	save(show, key) {
-		key = key || show.channel;
-		this.showMap[key] = show;
-		return show;
+	save(shows, key) {
+		key = key || shows[0].channel;
+		this.showsMap[key] = shows;
+		return shows;
 	}
 
-	getShow(channelId) {
-		let show = this.showMap[channelId];
+	getShows(channelId) {
+		let shows = this.showsMap[channelId];
 
-		if (!show) {
+		if (!shows || shows.length === 0) {
 			return null;
 		}
 
-		if (show.isFinished()) {
-			this.showMap[channelId] = null;
+		if (shows[0].isFinished()) {
+			this.showsMap[channelId] = null;
 			return null;
 		}
 
-		return show;
+		return shows;
 	}
 
 }

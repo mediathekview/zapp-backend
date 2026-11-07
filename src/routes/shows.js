@@ -15,8 +15,8 @@ function sendShowsResponse(shows, res) {
 }
 
 function findByChannel(req, res) {
-	downloader.getShow(req.params.channelId)
-		.then(show => sendShowsResponse(show === null ? [] : [show], res))
+	downloader.getShows(req.params.channelId)
+		.then(shows => sendShowsResponse(shows, res))
 		.catch(e => sendErrorResponse(e, res));
 }
 
