@@ -2,6 +2,11 @@ import Show from "../models/Show.js";
 
 const baseUrl = "https://programm-api.ard.de/nownext/api/channel?channel=";
 
+/**
+ * Maximum number of shows (current one and upcoming ones) returned per channel.
+ */
+const maxShows = 3;
+
 const channelIdMap = {
 	"das_erste": "Y3JpZDovL2Rhc2Vyc3RlLmRlL2xpdmUvY2xpcC9hYmNhMDdhMy0zNDc2LTQ4NTEtYjE2Mi1mZGU4ZjY0NmQ0YzQ",
 	"tagesschau24": "Y3JpZDovL2Rhc2Vyc3RlLmRlL3RhZ2Vzc2NoYXUvbGl2ZXN0cmVhbQ",
@@ -39,12 +44,14 @@ function parseShow(json, channelId) {
 	return show;
 }
 
-function getShowFromJson(json, channelId) {
+function getShowsFromJson(json, channelId) {
 	let broadcasts = json.events;
 
 	if (!broadcasts) {
-		return null;
+		return [];
 	}
+
+	const shows = [];
 
 	for (let entryKey in broadcasts) {
 		const entry = broadcasts[entryKey];
@@ -55,15 +62,24 @@ function getShowFromJson(json, channelId) {
 
 		const show = parseShow(entry, channelId);
 
-		if (show.isRunningNow()) {
-			return show;
+		// events are ordered chronologically; finished ones can be skipped
+		if (show.isFinished()) {
+			continue;
+		}
+
+		if (show.isRunningNow() || shows.length > 0) {
+			shows.push(show);
+		}
+
+		if (shows.length >= maxShows) {
+			break;
 		}
 	}
 
-	return null;
+	return shows;
 }
 
-async function getShow(channelId) {
+async function getShows(channelId) {
 	const apiChannelId = channelIdMap[channelId];
 	const url = baseUrl + apiChannelId;
 
@@ -71,20 +87,20 @@ async function getShow(channelId) {
 	const response = await fetch(url);
 
 	if (!response.ok) {
-		throw "wrong status code for getShow: " + response.status;
+		throw "wrong status code for getShows: " + response.status;
 	}
 
 	const json = await response.json();
-	const show = getShowFromJson(json, channelId);
+	const shows = getShowsFromJson(json, channelId);
 
-	if (show === null) {
+	if (shows.length === 0) {
 		throw "show info currently not available";
 	}
 
-	return show;
+	return shows;
 }
 
 export default {
 	channelIds,
-	getShow
+	getShows
 };

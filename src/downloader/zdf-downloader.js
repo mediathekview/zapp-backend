@@ -2,7 +2,15 @@ import Show from "../models/Show.js";
 
 const apiTokenRegex = new RegExp("videoToken[\\\\s:\"{]*apiToken[\\\\s:\"]*([\\w-.]{40,})");
 const indexUrl = "https://www.zdf.de/live-tv";
-const baseUrl = "https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc";
+const currentBaseUrl = "https://api.zdf.de/cmdm/epg/broadcasts?limit=1&page=1&order=desc";
+const upcomingBaseUrl = "https://api.zdf.de/cmdm/epg/broadcasts?limit=10&page=1&order=asc";
+const upcomingTimeSpan = {hours: 2};
+
+/**
+ * Maximum number of shows (current one and upcoming ones) returned per channel.
+ */
+const maxShows = 3;
+
 const headers = {
 	"Host": "api.zdf.de",
 	"Accept": "application/vnd.de.zdf.v1.0+json",
@@ -21,13 +29,7 @@ let apiToken = false;
 
 const channelIds = ["zdf", "dreisat", "kika", "phoenix", "zdf_info", "zdf_neo"];
 
-function getShowFromJson(json, channelId) {
-	let broadcast = json["http://zdf.de/rels/cmdm/broadcasts"][0];
-
-	if (!broadcast) {
-		return null;
-	}
-
+function parseShow(broadcast, channelId) {
 	let show = new Show(broadcast.title);
 	show.subtitle = broadcast.subtitle;
 	show.description = broadcast.text;
@@ -35,6 +37,21 @@ function getShowFromJson(json, channelId) {
 	show.startTime = Temporal.Instant.from(broadcast.airtimeBegin);
 	show.endTime = Temporal.Instant.from(broadcast.airtimeEnd);
 	return show;
+}
+
+function getShowFromJson(json, channelId) {
+	let broadcast = json["http://zdf.de/rels/cmdm/broadcasts"][0];
+
+	if (!broadcast) {
+		return null;
+	}
+
+	return parseShow(broadcast, channelId);
+}
+
+function getShowsFromJson(json, channelId) {
+	let broadcasts = json["http://zdf.de/rels/cmdm/broadcasts"] || [];
+	return broadcasts.map(broadcast => parseShow(broadcast, channelId));
 }
 
 async function getApiToken() {
@@ -59,10 +76,10 @@ async function getApiToken() {
 	}
 }
 
-async function getShow(channelId) {
+async function getCurrentShow(channelId) {
 	const urlChannel = channelIdMap[channelId];
 	const time = Temporal.Now.instant().round("second");
-	const url = `${baseUrl}&tvServices=${urlChannel}&to=${time}`;
+	const url = `${currentBaseUrl}&tvServices=${urlChannel}&to=${time}`;
 
 	let response;
 
@@ -93,7 +110,43 @@ async function getShow(channelId) {
 	return show;
 }
 
+async function getUpcomingShows(channelId, count) {
+	const urlChannel = channelIdMap[channelId];
+	const from = Temporal.Now.instant().round("second");
+	const to = from.add(upcomingTimeSpan);
+	const url = `${upcomingBaseUrl}&tvServices=${urlChannel}&from=${from}&to=${to}`;
+
+	console.log(`- load ${url} to get upcoming show info for ${channelId}`);
+	const response = await fetch(url, {headers: headers});
+
+	if (!response.ok) {
+		throw "wrong status code for getUpcomingShows: " + response.status;
+	}
+
+	const json = await response.json();
+	return getShowsFromJson(json, channelId).slice(0, count);
+}
+
+async function getShows(channelId) {
+	const currentShow = await getCurrentShow(channelId);
+
+	const upcomingShowCount = maxShows - 1;
+
+	if (upcomingShowCount === 0) {
+		return [currentShow];
+	}
+
+	try {
+		const upcomingShows = await getUpcomingShows(channelId, upcomingShowCount);
+		return [currentShow, ...upcomingShows];
+	} catch (e) {
+		// current show is still available, upcoming shows are optional
+		console.error(`- could not load upcoming shows for ${channelId}: ${e}`);
+		return [currentShow];
+	}
+}
+
 export default {
 	channelIds,
-	getShow
+	getShows
 };
